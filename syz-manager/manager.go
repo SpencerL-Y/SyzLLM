@@ -880,6 +880,7 @@ func (mgr *Manager) runInstanceInner(index int, instanceName string, injectExec 
 		},
 	}
 	cmd := instance.FuzzerCmd(args)
+	log.Logf(0, "XXX Fuzzer command: \n"+cmd)
 	_, rep, err := inst.Run(mgr.cfg.Timeouts.VMRunningTime, mgr.reporter, cmd,
 		vm.ExitTimeout, vm.StopChan(mgr.vmStop), vm.InjectExecuting(injectExec),
 		vm.EarlyFinishCb(func() {
