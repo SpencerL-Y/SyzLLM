@@ -2400,7 +2400,7 @@ static long syz_open_dev(volatile long a0, volatile long a1, volatile long a2)
 		sprintf(buf, "/dev/%s/%d:%d", a0 == 0xc ? "char" : "block", (uint8)a1, (uint8)a2);
 		return open(buf, O_RDWR, 0);
 	} else {
-		// syz_open_dev(dev strconst, id intptr, flags flags[open_flags]) fd
+		// syz_open_dev(dev ptr[in, string["/dev/foo"]], id intptr, flags flags[open_flags]) fd
 		char buf[1024];
 		char* hash;
 		strncpy(buf, (char*)a0, sizeof(buf) - 1);
@@ -4818,11 +4818,16 @@ static void setup_test()
 #endif
 
 #if SYZ_EXECUTOR || SYZ_CLOSE_FDS
+#include <sys/syscall.h>
 #define SYZ_HAVE_CLOSE_FDS 1
 static void close_fds()
 {
 #if SYZ_EXECUTOR
 	if (!flag_close_fds)
+		return;
+#endif
+#ifdef SYS_close_range
+	if (!syscall(SYS_close_range, 3, MAX_FDS, 0))
 		return;
 #endif
 	// Keeping a 9p transport pipe open will hang the proccess dead,

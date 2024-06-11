@@ -67,6 +67,11 @@ static void os_init(int argc, char** argv, char* data, size_t data_size)
 	got = mmap(data + data_size, SYZ_PAGE_SIZE, PROT_NONE, MAP_ANON | MAP_PRIVATE | MAP_FIXED, -1, 0);
 	if (data + data_size != got)
 		failmsg("mmap of right data PROT_NONE page failed", "want %p, got %p", data + data_size, got);
+
+	// A SIGCHLD handler makes sleep in loop exit immediately return with EINTR with a child exits.
+	struct sigaction act = {};
+	act.sa_handler = [](int) {};
+	sigaction(SIGCHLD, &act, nullptr);
 }
 
 static intptr_t execute_syscall(const call_t* c, intptr_t a[kMaxArgs])
@@ -177,18 +182,33 @@ static bool use_cover_edges(uint32 pc)
 	return true;
 }
 
+static bool is_kernel_data(uint64 addr)
+{
+#if GOARCH_386 || GOARCH_amd64
+	// This range corresponds to the first 1TB of the physical memory mapping,
+	// see Documentation/arch/x86/x86_64/mm.rst.
+	return addr >= 0xffff880000000000ull && addr < 0xffff890000000000ull;
+#else
+	return false;
+#endif
+}
+
+// Returns >0 for yes, <0 for no, 0 for don't know.
+static int is_kernel_pc(uint64 pc)
+{
+#if GOARCH_386 || GOARCH_amd64
+	// Text/modules range for x86_64.
+	return pc >= 0xffffffff80000000ull && pc < 0xffffffffff000000ull ? 1 : -1;
+#else
+	return 0;
+#endif
+}
+
 static bool use_cover_edges(uint64 pc)
 {
 #if GOARCH_amd64 || GOARCH_arm64
 	if (is_gvisor)
 		return false; // gvisor coverage is not a trace, so producing edges won't work
-#endif
-#if GOARCH_386 || GOARCH_amd64
-	// Text/modules range for x86_64.
-	if (pc < 0xffffffff80000000ull || pc >= 0xffffffffff000000ull) {
-		debug("got bad pc: 0x%llx\n", pc);
-		doexit(0);
-	}
 #endif
 	return true;
 }

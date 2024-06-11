@@ -153,9 +153,16 @@ func makeDWARFUnsafe(params *dwarfParams) (*Impl, error) {
 	var allRanges []pcRange
 	var allUnits []*CompileUnit
 	preciseCoverage := true
+	type binResult struct {
+		symbols     []*Symbol
+		coverPoints [2][]uint64
+		ranges      []pcRange
+		units       []*CompileUnit
+		err         error
+	}
+	binC := make(chan binResult, len(modules))
 	for _, module := range modules {
-		errc := make(chan error, 1)
-		go func() {
+		go func(m *Module) {
 			info := &symbolInfo{
 				tracePC:     make(map[uint64]bool),
 				traceCmp:    make(map[uint64]bool),
@@ -164,31 +171,38 @@ func makeDWARFUnsafe(params *dwarfParams) (*Impl, error) {
 			}
 			result, err := processModule(params, module, info, target)
 			if err != nil {
-				errc <- err
+				binC <- binResult{err: err}
 				return
 			}
-			allSymbols = append(allSymbols, result.Symbols...)
-			allCoverPoints[0] = append(allCoverPoints[0], result.CoverPoints[0]...)
-			allCoverPoints[1] = append(allCoverPoints[1], result.CoverPoints[1]...)
 			if module.Name == "" && len(result.CoverPoints[0]) == 0 {
 				err = fmt.Errorf("%v doesn't contain coverage callbacks (set CONFIG_KCOV=y on linux)", module.Path)
+				if err != nil {
+					binC <- binResult{err: err}
+					return
+				}
 			}
-			errc <- err
-		}()
-		ranges, units, err := params.readTextRanges(module)
-		if err != nil {
-			return nil, err
-		}
-		if err := <-errc; err != nil {
-			return nil, err
-		}
-		allRanges = append(allRanges, ranges...)
-		allUnits = append(allUnits, units...)
+			ranges, units, err := params.readTextRanges(module)
+			if err != nil {
+				binC <- binResult{err: err}
+				return
+			}
+			binC <- binResult{symbols: result.Symbols, coverPoints: result.CoverPoints, ranges: ranges, units: units}
+		}(module)
 		if isKcovBrokenInCompiler(params.getCompilerVersion(module.Path)) {
 			preciseCoverage = false
 		}
 	}
-
+	for range modules {
+		result := <-binC
+		if err := result.err; err != nil {
+			return nil, err
+		}
+		allSymbols = append(allSymbols, result.symbols...)
+		allCoverPoints[0] = append(allCoverPoints[0], result.coverPoints[0]...)
+		allCoverPoints[1] = append(allCoverPoints[1], result.coverPoints[1]...)
+		allRanges = append(allRanges, result.ranges...)
+		allUnits = append(allUnits, result.units...)
+	}
 	sort.Slice(allSymbols, func(i, j int) bool {
 		return allSymbols[i].Start < allSymbols[j].Start
 	})
@@ -458,12 +472,23 @@ func symbolizeModule(target *targets.Target, interner *symbolizer.Interner, objD
 func symbolize(target *targets.Target, interner *symbolizer.Interner, objDir, srcDir, buildDir string,
 	splitBuildDelimiters []string, pcs map[*Module][]uint64) ([]Frame, error) {
 	var frames []Frame
+	type frameResult struct {
+		frames []Frame
+		err    error
+	}
+	frameC := make(chan frameResult, len(pcs))
 	for mod, pcs1 := range pcs {
-		frames1, err := symbolizeModule(target, interner, objDir, srcDir, buildDir, splitBuildDelimiters, mod, pcs1)
-		if err != nil {
-			return nil, err
+		go func(mod *Module, pcs []uint64) {
+			frames, err := symbolizeModule(target, interner, objDir, srcDir, buildDir, splitBuildDelimiters, mod, pcs)
+			frameC <- frameResult{frames: frames, err: err}
+		}(mod, pcs1)
+	}
+	for range pcs {
+		res := <-frameC
+		if res.err != nil {
+			return nil, res.err
 		}
-		frames = append(frames, frames1...)
+		frames = append(frames, res.frames...)
 	}
 	return frames, nil
 }

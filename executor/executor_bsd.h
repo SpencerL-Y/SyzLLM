@@ -41,6 +41,11 @@ static void os_init(int argc, char** argv, void* data, size_t data_size)
 	struct rlimit rlim;
 	rlim.rlim_cur = rlim.rlim_max = kMaxFd;
 	setrlimit(RLIMIT_NOFILE, &rlim);
+
+	// A SIGCHLD handler makes sleep in loop exit immediately return with EINTR with a child exits.
+	struct sigaction act = {};
+	act.sa_handler = [](int) {};
+	sigaction(SIGCHLD, &act, nullptr);
 }
 
 static intptr_t execute_syscall(const call_t* c, intptr_t a[kMaxArgs])
@@ -172,6 +177,16 @@ static void cover_reset(cover_t* cov)
 static void cover_collect(cover_t* cov)
 {
 	cov->size = *(uint64*)cov->data;
+}
+
+static bool is_kernel_data(uint64 addr)
+{
+	return false;
+}
+
+static int is_kernel_pc(uint64 pc)
+{
+	return 0;
 }
 
 static bool use_cover_edges(uint64 pc)

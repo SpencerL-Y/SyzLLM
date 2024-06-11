@@ -218,8 +218,8 @@ const uint64 binary_format_stroct = 4;
 const uint64 no_copyout = -1;
 
 static int running;
-uint32 completed;
-bool is_kernel_64_bit = true;
+static uint32 completed;
+static bool is_kernel_64_bit = true;
 
 static uint8* input_data;
 
@@ -460,7 +460,7 @@ int main(int argc, char** argv)
 	os_init(argc, argv, (char*)SYZ_DATA_OFFSET, SYZ_NUM_PAGES * SYZ_PAGE_SIZE);
 	current_thread = &threads[0];
 
-	void* mmap_out = mmap(NULL, kMaxInput, PROT_READ, MAP_PRIVATE, kInFd, 0);
+	void* mmap_out = mmap(NULL, kMaxInput, PROT_READ, MAP_SHARED, kInFd, 0);
 	if (mmap_out == MAP_FAILED)
 		fail("mmap of input file failed");
 	input_data = static_cast<uint8*>(mmap_out);
@@ -997,6 +997,8 @@ void write_coverage_signal(cover_t* cov, uint32* signal_count_pos, uint32* cover
 		for (uint32 i = 0; i < cov->size; i++) {
 			cover_data_t pc = cover_data[i] + cov->pc_offset;
 			uint64 sig = pc;
+			if (is_kernel_pc(pc) < 0)
+				exitf("got bad pc: 0x%llx", (uint64)pc);
 			if (use_cover_edges(pc)) {
 				// Only hash the lower 12 bits so the hash is independent of any module offsets.
 				const uint64 mask = (1 << 12) - 1;
@@ -1278,11 +1280,14 @@ void execute_call(thread_t* th)
 
 static uint32 hash(uint32 a)
 {
+	// For test OS we disable hashing for determinism and testability.
+#if !GOOS_test
 	a = (a ^ 61) ^ (a >> 16);
 	a = a + (a << 3);
 	a = a ^ (a >> 4);
 	a = a * 0x27d4eb2d;
 	a = a ^ (a >> 15);
+#endif
 	return a;
 }
 
@@ -1567,32 +1572,21 @@ bool kcov_comparison_t::ignore() const
 	// Comparisons with 0 are not interesting, fuzzer should be able to guess 0's without help.
 	if (arg1 == 0 && (arg2 == 0 || (type & KCOV_CMP_CONST)))
 		return true;
-	if ((type & KCOV_CMP_SIZE_MASK) == KCOV_CMP_SIZE8) {
-		// This can be a pointer (assuming 64-bit kernel).
-		// First of all, we want avert fuzzer from our output region.
-		// Without this fuzzer manages to discover and corrupt it.
-		uint64 out_start = (uint64)output_data;
-		uint64 out_end = out_start + output_size;
-		if (arg1 >= out_start && arg1 <= out_end)
-			return true;
-		if (arg2 >= out_start && arg2 <= out_end)
-			return true;
-#if defined(GOOS_linux)
-		// Filter out kernel physical memory addresses.
-		// These are internal kernel comparisons and should not be interesting.
-		// The range covers first 1TB of physical mapping.
-		uint64 kmem_start = (uint64)0xffff880000000000ull;
-		uint64 kmem_end = (uint64)0xffff890000000000ull;
-		bool kptr1 = arg1 >= kmem_start && arg1 <= kmem_end;
-		bool kptr2 = arg2 >= kmem_start && arg2 <= kmem_end;
-		if (kptr1 && kptr2)
-			return true;
-		if (kptr1 && arg2 == 0)
-			return true;
-		if (kptr2 && arg1 == 0)
-			return true;
-#endif
-	}
+	// This can be a pointer (assuming 64-bit kernel).
+	// First of all, we want avert fuzzer from our output region.
+	// Without this fuzzer manages to discover and corrupt it.
+	uint64 out_start = (uint64)output_data;
+	uint64 out_end = out_start + output_size;
+	if (arg1 >= out_start && arg1 <= out_end)
+		return true;
+	if (arg2 >= out_start && arg2 <= out_end)
+		return true;
+	// Filter out kernel physical memory addresses.
+	// These are internal kernel comparisons and should not be interesting.
+	bool kptr1 = is_kernel_data(arg1) || is_kernel_pc(arg1) > 0 || arg1 == 0;
+	bool kptr2 = is_kernel_data(arg2) || is_kernel_pc(arg2) > 0 || arg2 == 0;
+	if (kptr1 && kptr2)
+		return true;
 	return !coverage_filter(pc);
 }
 
