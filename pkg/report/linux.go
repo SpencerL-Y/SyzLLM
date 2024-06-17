@@ -1279,6 +1279,8 @@ var linuxStackParams = &stackParams{
 		"find_lock_entries",
 		"truncate_inode_pages_range",
 		"__phys_addr",
+		"__fortify_report",
+		"cleanup_srcu_struct",
 	},
 	corruptedLines: []*regexp.Regexp{
 		// Fault injection stacks are frequently intermixed with crash reports.

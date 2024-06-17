@@ -1117,11 +1117,11 @@ void write_call_output(thread_t* th, bool finished)
 
 	if (flag_comparisons) {
 		// Collect only the comparisons
-		uint32 ncomps = th->cov.size;
+		uint64 ncomps = *(uint64_t*)th->cov.data;
 		kcov_comparison_t* start = (kcov_comparison_t*)(th->cov.data + sizeof(uint64));
 		kcov_comparison_t* end = start + ncomps;
 		if ((char*)end > th->cov.data_end)
-			failmsg("too many comparisons", "ncomps=%u", ncomps);
+			failmsg("too many comparisons", "ncomps=%llu", ncomps);
 		cover_unprotect(&th->cov);
 		std::sort(start, end);
 		ncomps = std::unique(start, end) - start;
@@ -1141,7 +1141,7 @@ void write_call_output(thread_t* th, bool finished)
 		else
 			write_coverage_signal<uint32>(&th->cov, signal_count_pos, cover_count_pos);
 	}
-	debug_verbose("out #%u: index=%u num=%u errno=%d finished=%d blocked=%d sig=%u cover=%u comps=%u\n",
+	debug_verbose("out #%u: index=%u num=%u errno=%d finished=%d blocked=%d sig=%u cover=%u comps=%llu\n",
 		      completed, th->call_index, th->call_num, reserrno, finished, blocked,
 		      *signal_count_pos, *cover_count_pos, *comps_count_pos);
 	completed++;
@@ -1484,7 +1484,7 @@ uint64 read_input(uint8** input_posp, bool peek)
 	for (int i = 0;; i++, shift += 7) {
 		const int maxLen = 10;
 		if (i == maxLen)
-			failmsg("varint overflow", "pos=%zu", *input_posp - input_data);
+			failmsg("varint overflow", "pos=%zu", (size_t)(*input_posp - input_data));
 		if (input_pos >= input_data + kMaxInput)
 			failmsg("input command overflows input", "pos=%p: [%p:%p)",
 				input_pos, input_data, input_data + kMaxInput);
@@ -1492,7 +1492,7 @@ uint64 read_input(uint8** input_posp, bool peek)
 		v |= uint64(b & 0x7f) << shift;
 		if (b < 0x80) {
 			if (i == maxLen - 1 && b > 1)
-				failmsg("varint overflow", "pos=%zu", *input_posp - input_data);
+				failmsg("varint overflow", "pos=%zu", (size_t)(*input_posp - input_data));
 			break;
 		}
 	}

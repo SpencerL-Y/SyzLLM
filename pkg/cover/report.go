@@ -31,7 +31,7 @@ type Prog struct {
 type KernelModule = backend.KernelModule
 
 func MakeReportGenerator(cfg *mgrconfig.Config, subsystem []mgrconfig.Subsystem,
-	modules []KernelModule, rawCover bool) (*ReportGenerator, error) {
+	modules []*KernelModule, rawCover bool) (*ReportGenerator, error) {
 	impl, err := backend.Make(cfg.SysTarget, cfg.Type, cfg.KernelObj,
 		cfg.KernelSrc, cfg.KernelBuildSrc, cfg.AndroidSplitBuild, cfg.ModuleObj, modules)
 	if err != nil {
@@ -202,7 +202,7 @@ func (rg *ReportGenerator) symbolizePCs(PCs []uint64) error {
 		return nil
 	}
 	symbolize := make(map[*backend.Symbol]bool)
-	pcs := make(map[*backend.Module][]uint64)
+	pcs := make(map[*backend.KernelModule][]uint64)
 	for _, pc := range PCs {
 		sym := rg.findSymbol(pc)
 		if sym == nil || sym.Symbolized || symbolize[sym] {
