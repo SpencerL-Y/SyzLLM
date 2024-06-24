@@ -14,8 +14,8 @@ cloud.google.com/go/internal/optional
 cloud.google.com/go/internal/pubsub
 cloud.google.com/go/internal/trace
 cloud.google.com/go/internal/version
-# cloud.google.com/go/ai v0.5.0
-## explicit; go 1.19
+# cloud.google.com/go/ai v0.6.0
+## explicit; go 1.20
 cloud.google.com/go/ai/generativelanguage/apiv1beta
 cloud.google.com/go/ai/generativelanguage/apiv1beta/generativelanguagepb
 cloud.google.com/go/ai/internal
@@ -364,7 +364,7 @@ github.com/golangci/unconvert
 # github.com/google/flatbuffers v24.3.25+incompatible
 ## explicit
 github.com/google/flatbuffers/go
-# github.com/google/generative-ai-go v0.13.0
+# github.com/google/generative-ai-go v0.14.0
 ## explicit; go 1.21
 github.com/google/generative-ai-go/genai
 github.com/google/generative-ai-go/genai/internal
