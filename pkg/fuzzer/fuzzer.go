@@ -6,8 +6,11 @@ package fuzzer
 import (
 	"context"
 	"fmt"
+	"log"
 	"math/rand"
+	"os"
 	"runtime"
+	"strings"
 	"sync"
 	"time"
 
@@ -33,6 +36,8 @@ type Fuzzer struct {
 	ctProgs      int
 	ctMu         sync.Mutex // TODO: use RWLock.
 	ctRegenerate chan struct{}
+
+	ctLLMReady bool
 
 	execQueues
 }
@@ -309,6 +314,20 @@ func (fuzzer *Fuzzer) updateChoiceTable(programs []*prog.Prog) {
 	}
 }
 
+func (fuzzer *Fuzzer) updateChoiceTableWithLLM(programs []*prog.Prog) {
+	// TODO llm: add target function to syscall analyze here
+	var llmFedSyscallNames []string
+
+	newCt := fuzzer.target.BuildChoiceTableWithLLM(programs, fuzzer.Config.EnabledCalls, llmFedSyscallNames)
+
+	fuzzer.ctMu.Lock()
+	defer fuzzer.ctMu.Unlock()
+	if len(programs) >= fuzzer.ctProgs {
+		fuzzer.ctProgs = len(programs)
+		fuzzer.ct = newCt
+	}
+}
+
 func (fuzzer *Fuzzer) choiceTableUpdater() {
 	for {
 		select {
@@ -338,6 +357,18 @@ func (fuzzer *Fuzzer) ChoiceTable() *prog.ChoiceTable {
 			// We're okay to lose the message.
 			// It means that we're already regenerating the table.
 		}
+	}
+	// LLM reading:
+
+	// adapt to your file name here
+	identifying_file_name := "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_file.txt"
+	comm_content, err := os.ReadFile(identifying_file_name)
+	if err != nil {
+		log.Fatal(err)
+	}
+	str_content := string(comm_content)
+	if strings.Contains(str_content, "1") {
+		fuzzer.ctLLMReady = true
 	}
 	return fuzzer.ct
 }

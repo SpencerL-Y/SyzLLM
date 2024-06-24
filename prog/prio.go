@@ -8,6 +8,7 @@ import (
 	"math"
 	"math/rand"
 	"sort"
+	"strings"
 )
 
 // Calulation of call-to-call priorities.
@@ -37,6 +38,29 @@ func (target *Target) CalculatePriorities(corpus []*Prog) [][]int32 {
 			}
 		}
 	}
+	return static
+}
+
+func (target *Target) CalculatePrioritiesWithLLMBias(corpus []*Prog, biased_indices map[int]bool) [][]int32 {
+	biased_set := biased_indices
+
+	static := target.CalculatePriorities(corpus)
+	for i, prios := range static {
+		dst := static[i]
+		_, iInSet := biased_set[i]
+		for j, _ := range prios {
+			_, jInSet := biased_set[j]
+			if jInSet && iInSet {
+				dst[j] += 2
+			} else if jInSet || iInSet {
+				dst[j] += 1
+			} else {
+				// do nothing
+			}
+		}
+	}
+	// TODO llm: change value here
+	normalizePrios(static)
 	return static
 }
 
@@ -205,6 +229,9 @@ type ChoiceTable struct {
 }
 
 func (target *Target) BuildChoiceTable(corpus []*Prog, enabled map[*Syscall]bool) *ChoiceTable {
+	for i, c := range target.Syscalls {
+		fmt.Println(i, ":", c.Name)
+	}
 	if enabled == nil {
 		enabled = make(map[*Syscall]bool)
 		for _, c := range target.Syscalls {
@@ -242,6 +269,79 @@ func (target *Target) BuildChoiceTable(corpus []*Prog, enabled map[*Syscall]bool
 		}
 	}
 	prios := target.CalculatePriorities(corpus)
+	run := make([][]int32, len(target.Syscalls))
+	// ChoiceTable.runs[][] contains cumulated sum of weighted priority numbers.
+	// This helps in quick binary search with biases when generating programs.
+	// This only applies for system calls that are enabled for the target.
+	for i := range run {
+		if !enabledCalls[target.Syscalls[i]] {
+			continue
+		}
+		run[i] = make([]int32, len(target.Syscalls))
+		var sum int32
+		for j := range run[i] {
+			if enabledCalls[target.Syscalls[j]] {
+				sum += prios[i][j]
+			}
+			run[i][j] = sum
+		}
+	}
+	return &ChoiceTable{target, run, generatableCalls}
+}
+
+func (target *Target) BuildChoiceTableWithLLM(corpus []*Prog, enabled map[*Syscall]bool, llmFedNames []string) *ChoiceTable {
+	var llmFedNameIds map[int]bool
+	llmFedNameIds = make(map[int]bool)
+	for i, c := range target.Syscalls {
+		syscallName := c.Name
+		contain := false
+		for _, llmName := range llmFedNames {
+			if strings.Contains(syscallName, llmName) {
+				contain = true
+				break
+			}
+		}
+		llmFedNameIds[i] = contain
+
+	}
+
+	if enabled == nil {
+		enabled = make(map[*Syscall]bool)
+		for _, c := range target.Syscalls {
+			enabled[c] = true
+		}
+	}
+	noGenerateCalls := make(map[int]bool)
+	enabledCalls := make(map[*Syscall]bool)
+	for call := range enabled {
+		if call.Attrs.NoGenerate {
+			noGenerateCalls[call.ID] = true
+		} else if !call.Attrs.Disabled {
+			enabledCalls[call] = true
+		}
+	}
+	var generatableCalls []*Syscall
+	for c := range enabledCalls {
+		generatableCalls = append(generatableCalls, c)
+	}
+	if len(generatableCalls) == 0 {
+		panic("no syscalls enabled and generatable")
+	}
+	sort.Slice(generatableCalls, func(i, j int) bool {
+		return generatableCalls[i].ID < generatableCalls[j].ID
+	})
+	for _, p := range corpus {
+		for _, call := range p.Calls {
+			if !enabledCalls[call.Meta] && !noGenerateCalls[call.Meta.ID] {
+				fmt.Printf("corpus contains disabled syscall %v\n", call.Meta.Name)
+				for call := range enabled {
+					fmt.Printf("%s: enabled\n", call.Name)
+				}
+				panic("disabled syscall")
+			}
+		}
+	}
+	prios := target.CalculatePrioritiesWithLLMBias(corpus, llmFedNameIds)
 	run := make([][]int32, len(target.Syscalls))
 	// ChoiceTable.runs[][] contains cumulated sum of weighted priority numbers.
 	// This helps in quick binary search with biases when generating programs.
