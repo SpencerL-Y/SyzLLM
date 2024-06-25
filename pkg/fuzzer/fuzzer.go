@@ -32,12 +32,16 @@ type Fuzzer struct {
 	rnd    *rand.Rand
 	target *prog.Target
 
-	ct           *prog.ChoiceTable
-	ctProgs      int
-	ctMu         sync.Mutex // TODO: use RWLock.
+	ct      *prog.ChoiceTable
+	ctProgs int
+	ctMu    sync.Mutex // TODO: use RWLock.
+
 	ctRegenerate chan struct{}
 
-	ctLLMReady bool
+	// SyzLLM added
+	ctLLMReady    bool
+	llmEnabled    bool
+	llm_comm_file string
 
 	execQueues
 }
@@ -60,7 +64,9 @@ func NewFuzzer(ctx context.Context, cfg *Config, rnd *rand.Rand,
 
 		// We're okay to lose some of the messages -- if we are already
 		// regenerating the table, we don't want to repeat it right away.
-		ctRegenerate: make(chan struct{}),
+		ctRegenerate:  make(chan struct{}),
+		llmEnabled:    true,
+		llm_comm_file: "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_file.txt",
 	}
 	f.execQueues = newExecQueues(f)
 	f.updateChoiceTable(nil)
@@ -318,7 +324,13 @@ func (fuzzer *Fuzzer) updateChoiceTableWithLLM(programs []*prog.Prog) {
 	// TODO llm: add target function to syscall analyze here
 	var llmFedSyscallNames []string
 
-	newCt := fuzzer.target.BuildChoiceTableWithLLM(programs, fuzzer.Config.EnabledCalls, llmFedSyscallNames)
+	// absorb the content from analysis result
+	var newCt *prog.ChoiceTable
+	if fuzzer.ctLLMReady {
+		newCt = fuzzer.target.BuildChoiceTableWithLLM(programs, fuzzer.Config.EnabledCalls, llmFedSyscallNames)
+	} else {
+		newCt = fuzzer.target.BuildChoiceTable(programs, fuzzer.Config.EnabledCalls)
+	}
 
 	fuzzer.ctMu.Lock()
 	defer fuzzer.ctMu.Unlock()
@@ -335,7 +347,12 @@ func (fuzzer *Fuzzer) choiceTableUpdater() {
 			return
 		case <-fuzzer.ctRegenerate:
 		}
-		fuzzer.updateChoiceTable(fuzzer.Config.Corpus.Programs())
+		enable_llm := fuzzer.llmEnabled
+		if enable_llm {
+			fuzzer.updateChoiceTableWithLLM(fuzzer.Config.Corpus.Programs())
+		} else {
+			fuzzer.updateChoiceTable(fuzzer.Config.Corpus.Programs())
+		}
 	}
 }
 
@@ -359,16 +376,18 @@ func (fuzzer *Fuzzer) ChoiceTable() *prog.ChoiceTable {
 		}
 	}
 	// LLM reading:
-
-	// adapt to your file name here
-	identifying_file_name := "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_file.txt"
-	comm_content, err := os.ReadFile(identifying_file_name)
-	if err != nil {
-		log.Fatal(err)
-	}
-	str_content := string(comm_content)
-	if strings.Contains(str_content, "1") {
-		fuzzer.ctLLMReady = true
+	enable_llm := fuzzer.llmEnabled
+	if enable_llm {
+		// adapt to your file name here
+		identifying_file_name := fuzzer.llm_comm_file
+		comm_content, err := os.ReadFile(identifying_file_name)
+		if err != nil {
+			log.Fatal(err)
+		}
+		str_content := string(comm_content)
+		if strings.Contains(str_content, "1") {
+			fuzzer.ctLLMReady = true
+		}
 	}
 	return fuzzer.ct
 }
