@@ -2657,6 +2657,15 @@ type AdvancedMachineFeatures struct {
 	// EnableUefiNetworking: Whether to enable UEFI networking for instance
 	// creation.
 	EnableUefiNetworking bool `json:"enableUefiNetworking,omitempty"`
+	// PerformanceMonitoringUnit: Type of Performance Monitoring Unit requested on
+	// instance.
+	//
+	// Possible values:
+	//   "ARCHITECTURAL" - Architecturally defined non-LLC events.
+	//   "ENHANCED" - Most documented core/L2 and LLC events.
+	//   "PERFORMANCE_MONITORING_UNIT_UNSPECIFIED"
+	//   "STANDARD" - Most documented core/L2 events.
+	PerformanceMonitoringUnit string `json:"performanceMonitoringUnit,omitempty"`
 	// ThreadsPerCore: The number of threads per physical core. To disable
 	// simultaneous multithreading (SMT) set this to 1. If unset, the maximum
 	// number of threads supported per core by the underlying processor is assumed.
@@ -3053,12 +3062,12 @@ type AttachedDisk struct {
 	// on disk
 	ShieldedInstanceInitialState *InitialStateConfig `json:"shieldedInstanceInitialState,omitempty"`
 	// Source: Specifies a valid partial or full URL to an existing Persistent Disk
-	// resource. When creating a new instance, one of initializeParams.sourceImage
-	// or initializeParams.sourceSnapshot or disks.source is required except for
-	// local SSD. If desired, you can also attach existing non-root persistent
-	// disks using this property. This field is only applicable for persistent
-	// disks. Note that for InstanceTemplate, specify the disk name for zonal disk,
-	// and the URL for regional disk.
+	// resource. When creating a new instance boot disk, one of
+	// initializeParams.sourceImage or initializeParams.sourceSnapshot or
+	// disks.source is required. If desired, you can also attach existing non-root
+	// persistent disks using this property. This field is only applicable for
+	// persistent disks. Note that for InstanceTemplate, specify the disk name for
+	// zonal disk, and the URL for regional disk.
 	Source string `json:"source,omitempty"`
 	// Type: Specifies the type of the disk, either SCRATCH or PERSISTENT. If not
 	// specified, the default is PERSISTENT.
@@ -3168,13 +3177,12 @@ type AttachedDiskInitializeParams struct {
 	// template, specify only the resource policy name.
 	ResourcePolicies []string `json:"resourcePolicies,omitempty"`
 	// SourceImage: The source image to create this disk. When creating a new
-	// instance, one of initializeParams.sourceImage or
-	// initializeParams.sourceSnapshot or disks.source is required except for local
-	// SSD. To create a disk with one of the public operating system images,
-	// specify the image by its family name. For example, specify family/debian-9
-	// to use the latest Debian 9 image:
-	// projects/debian-cloud/global/images/family/debian-9 Alternatively, use a
-	// specific version of a public operating system image:
+	// instance boot disk, one of initializeParams.sourceImage or
+	// initializeParams.sourceSnapshot or disks.source is required. To create a
+	// disk with one of the public operating system images, specify the image by
+	// its family name. For example, specify family/debian-9 to use the latest
+	// Debian 9 image: projects/debian-cloud/global/images/family/debian-9
+	// Alternatively, use a specific version of a public operating system image:
 	// projects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD To create a
 	// disk with a custom image that you created, specify the image name in the
 	// following format: global/images/my-custom-image You can also specify a
@@ -3191,11 +3199,11 @@ type AttachedDiskInitializeParams struct {
 	// keys.
 	SourceImageEncryptionKey *CustomerEncryptionKey `json:"sourceImageEncryptionKey,omitempty"`
 	// SourceSnapshot: The source snapshot to create this disk. When creating a new
-	// instance, one of initializeParams.sourceSnapshot or
-	// initializeParams.sourceImage or disks.source is required except for local
-	// SSD. To create a disk with a snapshot that you created, specify the snapshot
-	// name in the following format: global/snapshots/my-backup If the source
-	// snapshot is deleted later, this field will not be set.
+	// instance boot disk, one of initializeParams.sourceSnapshot or
+	// initializeParams.sourceImage or disks.source is required. To create a disk
+	// with a snapshot that you created, specify the snapshot name in the following
+	// format: global/snapshots/my-backup If the source snapshot is deleted later,
+	// this field will not be set.
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
 	// SourceSnapshotEncryptionKey: The customer-supplied encryption key of the
 	// source snapshot.
@@ -7640,16 +7648,25 @@ func (s *Condition) MarshalJSON() ([]byte, error) {
 
 // ConfidentialInstanceConfig: A set of Confidential Instance options.
 type ConfidentialInstanceConfig struct {
+	// ConfidentialInstanceType: Defines the type of technology used by the
+	// confidential instance.
+	//
+	// Possible values:
+	//   "CONFIDENTIAL_INSTANCE_TYPE_UNSPECIFIED" - No type specified. Do not use
+	// this value.
+	//   "SEV" - AMD Secure Encrypted Virtualization.
+	//   "SEV_SNP" - AMD Secure Encrypted Virtualization - Secure Nested Paging.
+	ConfidentialInstanceType string `json:"confidentialInstanceType,omitempty"`
 	// EnableConfidentialCompute: Defines whether the instance should have
 	// confidential compute enabled.
 	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableConfidentialCompute")
+	// ForceSendFields is a list of field names (e.g. "ConfidentialInstanceType")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableConfidentialCompute") to
+	// NullFields is a list of field names (e.g. "ConfidentialInstanceType") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -16032,6 +16049,10 @@ type InstanceGroupManager struct {
 	// Region: [Output Only] The URL of the region where the managed instance group
 	// resides (for regional resources).
 	Region string `json:"region,omitempty"`
+	// SatisfiesPzi: [Output Only] Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: [Output Only] Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SelfLink: [Output Only] The URL for this managed instance group. The server
 	// defines this URL.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -39153,6 +39174,10 @@ type Scheduling struct {
 	// other resources. This field is for use by internal tools that use the public
 	// API.
 	LocationHint string `json:"locationHint,omitempty"`
+	// MaxRunDuration: Specifies the max run duration for the given instance. If
+	// specified, the instance termination action will be performed at the end of
+	// the run duration.
+	MaxRunDuration *Duration `json:"maxRunDuration,omitempty"`
 	// MinNodeCpus: The minimum number of virtual CPUs this instance will consume
 	// when running on a sole-tenant node.
 	MinNodeCpus int64 `json:"minNodeCpus,omitempty"`
@@ -39173,7 +39198,8 @@ type Scheduling struct {
 	// instance to be restarted, set the automaticRestart flag to true. Your
 	// instance may be restarted more than once, and it may be restarted outside
 	// the window of maintenance events.
-	OnHostMaintenance string `json:"onHostMaintenance,omitempty"`
+	OnHostMaintenance    string                          `json:"onHostMaintenance,omitempty"`
+	OnInstanceStopAction *SchedulingOnInstanceStopAction `json:"onInstanceStopAction,omitempty"`
 	// Preemptible: Defines whether the instance is preemptible. This can only be
 	// set during instance creation or while the instance is stopped and therefore,
 	// in a `TERMINATED` state. See Instance Life Cycle for more information on the
@@ -39186,6 +39212,10 @@ type Scheduling struct {
 	//   "STANDARD" - Standard provisioning with user controlled runtime, no
 	// discounts.
 	ProvisioningModel string `json:"provisioningModel,omitempty"`
+	// TerminationTime: Specifies the timestamp, when the instance will be
+	// terminated, in RFC3339 text format. If specified, the instance termination
+	// action will be performed at the termination time.
+	TerminationTime string `json:"terminationTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutomaticRestart") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -39234,6 +39264,31 @@ type SchedulingNodeAffinity struct {
 
 func (s *SchedulingNodeAffinity) MarshalJSON() ([]byte, error) {
 	type NoMethod SchedulingNodeAffinity
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// SchedulingOnInstanceStopAction: Defines the behaviour for instances with the
+// instance_termination_action STOP.
+type SchedulingOnInstanceStopAction struct {
+	// DiscardLocalSsd: If true, the contents of any attached Local SSD disks will
+	// be discarded else, the Local SSD data will be preserved when the instance is
+	// stopped at the end of the run duration/termination time.
+	DiscardLocalSsd bool `json:"discardLocalSsd,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DiscardLocalSsd") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiscardLocalSsd") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *SchedulingOnInstanceStopAction) MarshalJSON() ([]byte, error) {
+	type NoMethod SchedulingOnInstanceStopAction
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -47034,6 +47089,36 @@ type TargetHttpsProxy struct {
 	// TargetHttpsProxy resource. If not set, the TargetHttpsProxy resource has no
 	// SSL policy configured.
 	SslPolicy string `json:"sslPolicy,omitempty"`
+	// TlsEarlyData:  Specifies whether TLS 1.3 0-RTT Data ("Early Data") should be
+	// accepted for this service. Early Data allows a TLS resumption handshake to
+	// include the initial application payload (a HTTP request) alongside the
+	// handshake, reducing the effective round trips to "zero". This applies to TLS
+	// 1.3 connections over TCP (HTTP/2) as well as over UDP (QUIC/h3). This can
+	// improve application performance, especially on networks where interruptions
+	// may be common, such as on mobile. Requests with Early Data will have the
+	// "Early-Data" HTTP header set on the request, with a value of "1", to allow
+	// the backend to determine whether Early Data was included. Note: TLS Early
+	// Data may allow requests to be replayed, as the data is sent to the backend
+	// before the handshake has fully completed. Applications that allow idempotent
+	// HTTP methods to make non-idempotent changes, such as a GET request updating
+	// a database, should not accept Early Data on those requests, and reject
+	// requests with the "Early-Data: 1" HTTP header by returning a HTTP 425 (Too
+	// Early) status code, in order to remain RFC compliant. The default value is
+	// DISABLED.
+	//
+	// Possible values:
+	//   "DISABLED" - TLS 1.3 Early Data is not advertised, and any (invalid)
+	// attempts to send Early Data will be rejected by closing the connection.
+	//   "PERMISSIVE" - This enables TLS 1.3 0-RTT, and only allows Early Data to
+	// be included on requests with safe HTTP methods (GET, HEAD, OPTIONS, TRACE).
+	// This mode does not enforce any other limitations for requests with Early
+	// Data. The application owner should validate that Early Data is acceptable
+	// for a given request path.
+	//   "STRICT" - This enables TLS 1.3 0-RTT, and only allows Early Data to be
+	// included on requests with safe HTTP methods (GET, HEAD, OPTIONS, TRACE)
+	// without query parameters. Requests that send Early Data with non-idempotent
+	// HTTP methods or with query parameters will be rejected with a HTTP 425.
+	TlsEarlyData string `json:"tlsEarlyData,omitempty"`
 	// UrlMap: A fully-qualified or valid partial URL to the UrlMap resource that
 	// defines the mapping from URL to the BackendService. For example, the
 	// following are all valid URLs for specifying a URL map: -
@@ -52973,8 +53058,10 @@ type WeightedBackendService struct {
 	// routeAction) . The selection of a backend service is determined only for new
 	// traffic. Once a user's request has been directed to a backend service,
 	// subsequent requests are sent to the same backend service as determined by
-	// the backend service's session affinity policy. The value must be from 0 to
-	// 1000.
+	// the backend service's session affinity policy. Don't configure session
+	// affinity if you're using weighted traffic splitting. If you do, the weighted
+	// traffic splitting configuration takes precedence. The value must be from 0
+	// to 1000.
 	Weight int64 `json:"weight,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackendService") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -53178,7 +53265,7 @@ func (s *XpnResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // Zone: Represents a Zone resource. A zone is a deployment area. These
-// deployment areas are subsets of a region. For example the zone us-east1-a is
+// deployment areas are subsets of a region. For example the zone us-east1-b is
 // located in the us-east1 region. For more information, read Regions and
 // Zones.
 type Zone struct {
