@@ -65,7 +65,7 @@ func NewFuzzer(ctx context.Context, cfg *Config, rnd *rand.Rand,
 		// We're okay to lose some of the messages -- if we are already
 		// regenerating the table, we don't want to repeat it right away.
 		ctRegenerate:  make(chan struct{}),
-		llmEnabled:    true,
+		llmEnabled:    false,
 		llm_comm_file: "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_file.txt",
 	}
 	f.execQueues = newExecQueues(f)
@@ -328,6 +328,12 @@ func (fuzzer *Fuzzer) updateChoiceTableWithLLM(programs []*prog.Prog) {
 	var newCt *prog.ChoiceTable
 	if fuzzer.ctLLMReady {
 		newCt = fuzzer.target.BuildChoiceTableWithLLM(programs, fuzzer.Config.EnabledCalls, llmFedSyscallNames)
+		if rand.Intn(2) == 0 {
+			// disable the ctLLMReady
+			fuzzer.ctLLMReady = false
+			file_name := fuzzer.llm_comm_file
+			os.Truncate(file_name, 0)
+		}
 	} else {
 		newCt = fuzzer.target.BuildChoiceTable(programs, fuzzer.Config.EnabledCalls)
 	}
