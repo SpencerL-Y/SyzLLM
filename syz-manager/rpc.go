@@ -8,8 +8,11 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"os"
+	"path/filepath"
 	"slices"
 	"sort"
+	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -75,6 +78,10 @@ type Runner struct {
 	executing     map[int64]bool
 	lastExec      *LastExecuting
 	rnd           *rand.Rand
+
+	// llm coverage feedback
+	llmCovFolderPath string
+	fileIndex        int
 }
 
 type BugFrames struct {
@@ -427,12 +434,53 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 		status = queue.ExecFailure
 		resErr = errors.New(msg.Error)
 	}
-	req.Done(&queue.Result{
+	res := &queue.Result{
 		Status: status,
 		Info:   msg.Info,
 		Output: slices.Clone(msg.Output),
 		Err:    resErr,
-	})
+	}
+	outputFolder := runner.llmCovFolderPath
+	fileName := filepath.Join(outputFolder, "cov_file_"+strconv.Itoa(runner.fileIndex))
+	file, err := os.Create(fileName)
+	if err != nil {
+		fmt.Println("Error creating file:", err)
+	}
+	defer file.Close()
+	progCalls := req.Prog.Calls
+	printProg := false
+	if res != nil && res.Info != nil {
+		for i, c := range res.Info.Calls {
+			if len(c.Cover) > 0 {
+				printProg = true
+				// log.Logf(0, "-----call: %v\n", progCalls[i].Meta.Name)
+				file.WriteString(fmt.Sprintf("-----call: %v\n", progCalls[i].Meta.Name))
+				// log.Logf(0, "-----args: ")
+				file.WriteString("-----args: \n")
+				for _, arg := range progCalls[i].Meta.Args {
+					// HERERE
+					// log.Logf(0, arg.String())
+					file.WriteString(arg.String() + "\n")
+				}
+				// log.Logf(0, "-----covers:\n")
+				file.WriteString("-----covers:\n")
+				for _, cover := range c.Cover {
+					// log.Logf(0, "%x", cover)
+					file.WriteString(fmt.Sprintf("%x\n", cover))
+				}
+			}
+		}
+	}
+	if printProg {
+		// log.Logf(0, "-----Program: \n")
+		file.WriteString("-----Program: \n")
+		for _, call := range req.Prog.Calls {
+			// fmt.Printf("call: %v\n", call.Meta.Name, call)
+			file.WriteString(fmt.Sprintf("call: %v\n", call.Meta.Name))
+		}
+		runner.fileIndex += 1
+	}
+	req.Done(res)
 	return nil
 }
 
@@ -529,13 +577,16 @@ func validateRequest(req *queue.Request) error {
 
 func (serv *RPCServer) createInstance(name string, injectExec chan<- bool) {
 	runner := &Runner{
-		injectExec: injectExec,
-		finished:   make(chan bool),
-		requests:   make(map[int64]*queue.Request),
-		executing:  make(map[int64]bool),
-		lastExec:   MakeLastExecuting(serv.cfg.Procs, 6),
-		rnd:        rand.New(rand.NewSource(time.Now().UnixNano())),
+		injectExec:       injectExec,
+		finished:         make(chan bool),
+		requests:         make(map[int64]*queue.Request),
+		executing:        make(map[int64]bool),
+		lastExec:         MakeLastExecuting(serv.cfg.Procs, 6),
+		rnd:              rand.New(rand.NewSource(time.Now().UnixNano())),
+		llmCovFolderPath: "./cov_folder_vm_" + name,
+		fileIndex:        0,
 	}
+	os.Mkdir(runner.llmCovFolderPath, 0777)
 	serv.mu.Lock()
 	if serv.runners[name] != nil {
 		panic(fmt.Sprintf("duplicate instance %s", name))
