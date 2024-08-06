@@ -243,7 +243,6 @@ func (r *Runner) processIssues(issues []result.Issue, sw *timeutils.Stopwatch, s
 
 	return issues
 }
-
 func getExcludeProcessor(cfg *config.Issues) processors.Processor {
 	opts := processors.ExcludeOptions{
 		CaseSensitive: cfg.ExcludeCaseSensitive,

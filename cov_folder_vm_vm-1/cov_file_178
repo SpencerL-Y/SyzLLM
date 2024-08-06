@@ -1,0 +1,21 @@
+-----call: prctl$PR_CAP_AMBIENT
+-----args: 
+const[47, const]
+prctl_cap_ambient
+intptr
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff811b5b7f
+ffffffff811b5c02
+ffffffff811b6f61
+ffffffff81d4b6ad
+ffffffff81d4b752
+ffffffff81d4b764
+ffffffff81d4ba01
+ffffffff81d581f7
+ffffffff81d5821a
+ffffffff81d58252
+ffffffff81d58281
+ffffffff83f22628

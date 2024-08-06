@@ -349,7 +349,6 @@ func (fuzzer *Fuzzer) updateChoiceTableWithLLM(programs []*prog.Prog) {
 		fuzzer.ct = newCt
 	}
 }
-
 func (fuzzer *Fuzzer) choiceTableUpdater() {
 	for {
 		select {

@@ -1,0 +1,19 @@
+-----call: setresgid
+-----args: 
+gid
+gid
+gid
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff811ae6c3
+ffffffff811ae6fa
+ffffffff811ae98d
+ffffffff811ae9a4
+ffffffff811ae9b3
+ffffffff811aeb82
+ffffffff811aebbf
+ffffffff811aebce
+ffffffff811aed81
+ffffffff83f22628

@@ -1,0 +1,23 @@
+-----call: rt_sigsuspend
+-----args: 
+ptr[in, sigset_t]
+len
+-----covers:
+ffffffff810a527b
+ffffffff810a5298
+ffffffff81193a24
+ffffffff81193b59
+ffffffff81193bc9
+ffffffff81193be8
+ffffffff811a6f43
+ffffffff811a6f8b
+ffffffff811a6faa
+ffffffff81231c7f
+ffffffff813ed892
+ffffffff813ef8f3
+ffffffff813ef955
+ffffffff81f9f538
+ffffffff81f9f550
+ffffffff81f9f55a
+ffffffff81f9f583
+ffffffff81f9f58d

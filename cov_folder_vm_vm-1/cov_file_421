@@ -1,0 +1,24 @@
+-----call: prctl$PR_MCE_KILL
+-----args: 
+const[33, const]
+prctl_mce_kill_mode
+prctl_mce_kill_submode
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff811b5b7f
+ffffffff811b5bae
+ffffffff811b5c02
+ffffffff811b69b1
+ffffffff811b69bf
+ffffffff811b6bfc
+ffffffff811b6c0a
+ffffffff811b6f61
+ffffffff81d4b6ad
+ffffffff81d4ba01
+ffffffff81d581f7
+ffffffff81d5821a
+ffffffff81d58267
+ffffffff81d58281
+ffffffff83f22628

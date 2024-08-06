@@ -1,0 +1,21 @@
+-----call: prctl$PR_TASK_PERF_EVENTS_DISABLE
+-----args: 
+const[31, const]
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff811b5b7f
+ffffffff811b5bae
+ffffffff811b5c02
+ffffffff811b66da
+ffffffff811b6f61
+ffffffff8154a4af
+ffffffff8154a72f
+ffffffff81d4b6ad
+ffffffff81d4ba01
+ffffffff81d581f7
+ffffffff81d5821a
+ffffffff81d58267
+ffffffff81d58281
+ffffffff83f22628

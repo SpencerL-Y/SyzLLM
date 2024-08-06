@@ -1,0 +1,22 @@
+-----call: pwritev
+-----args: 
+fd
+ptr[in, array[iovec[in, array[int8]]]]
+len
+int32
+int32
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff81751a07
+ffffffff81751a9d
+ffffffff81751b11
+ffffffff81751b48
+ffffffff817c2790
+ffffffff817c28e2
+ffffffff817c28fd
+ffffffff817c290c
+ffffffff817c2935
+ffffffff817c2c9c
+ffffffff83f22628

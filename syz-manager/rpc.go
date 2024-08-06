@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"slices"
 	"sort"
@@ -82,6 +83,7 @@ type Runner struct {
 	// llm coverage feedback
 	llmCovFolderPath string
 	fileIndex        int
+	llm_mu           sync.Mutex
 }
 
 type BugFrames struct {
@@ -440,6 +442,7 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 		Output: slices.Clone(msg.Output),
 		Err:    resErr,
 	}
+	runner.llm_mu.Lock()
 	outputFolder := runner.llmCovFolderPath
 	fileName := filepath.Join(outputFolder, "cov_file_"+strconv.Itoa(runner.fileIndex))
 	file, err := os.Create(fileName)
@@ -471,13 +474,14 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 			}
 		}
 	}
+	runner.llm_mu.Unlock()
 	if printProg {
 		// log.Logf(0, "-----Program: \n")
-		file.WriteString("-----Program: \n")
-		for _, call := range req.Prog.Calls {
-			// fmt.Printf("call: %v\n", call.Meta.Name, call)
-			file.WriteString(fmt.Sprintf("call: %v\n", call.Meta.Name))
-		}
+		// file.WriteString("-----Program: \n")
+		// for _, call := range req.Prog.Calls {
+		// 	// fmt.Printf("call: %v\n", call.Meta.Name, call)
+		// 	file.WriteString(fmt.Sprintf("call: %v\n", call.Meta.Name))
+		// }
 		runner.fileIndex += 1
 	}
 	req.Done(res)
@@ -593,6 +597,8 @@ func (serv *RPCServer) createInstance(name string, injectExec chan<- bool) {
 	}
 	serv.runners[name] = runner
 	serv.mu.Unlock()
+	// start llm cov processing loop
+	go runner.processCovRawFileByLLMLoop()
 }
 
 // stopInstance prevents further request exchange requests.
@@ -740,5 +746,22 @@ func addFallbackSignal(p *prog.Prog, info *flatrpc.ProgInfo) {
 	p.FallbackSignal(callInfos)
 	for i, inf := range callInfos {
 		info.Calls[i].Signal = inf.Signal
+	}
+}
+
+func (runner *Runner) processCovRawFileByLLMLoop() {
+	folder := runner.llmCovFolderPath
+	for {
+		runner.llm_mu.Lock()
+		entries, _ := os.ReadDir(folder)
+		runner.llm_mu.Unlock()
+		for _, item := range entries {
+
+			log.Logf(0, "----- run llm covRawFileLoop")
+			cmd := exec.Command("python3", "./scripts/cov_llm_proc.py "+item.Name())
+			out, _ := cmd.Output()
+			log.Logf(0, string(out))
+		}
+
 	}
 }

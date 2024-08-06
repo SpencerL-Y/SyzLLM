@@ -1,0 +1,37 @@
+-----call: ppoll
+-----args: 
+ptr[in, array[pollfd]]
+len
+ptr[in, timespec]
+ptr[in, sigset_t]
+len
+-----covers:
+ffffffff810a527b
+ffffffff810a5298
+ffffffff81196ea8
+ffffffff81197027
+ffffffff81231c7f
+ffffffff813ed892
+ffffffff813ef8f3
+ffffffff813ef955
+ffffffff817a171c
+ffffffff817a1767
+ffffffff817a3f48
+ffffffff817a3fa9
+ffffffff817a4080
+ffffffff817a40c9
+ffffffff817a4217
+ffffffff817a451e
+ffffffff817a454d
+ffffffff817a456d
+ffffffff817a4583
+ffffffff817a4606
+ffffffff817a4624
+ffffffff817a4698
+ffffffff817a47df
+ffffffff817a6946
+ffffffff817a6a45
+ffffffff817a6ab2
+ffffffff83f3bb73
+ffffffff83f3be25
+ffffffff83f3be97

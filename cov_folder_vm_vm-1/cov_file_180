@@ -1,0 +1,16 @@
+-----call: fchdir
+-----args: 
+fd
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff81741be6
+ffffffff81741c92
+ffffffff817c2790
+ffffffff817c28e2
+ffffffff817c28fd
+ffffffff817c290c
+ffffffff817c2935
+ffffffff817c74cc
+ffffffff83f22628

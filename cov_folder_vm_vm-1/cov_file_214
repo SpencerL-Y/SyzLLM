@@ -1,0 +1,14 @@
+-----call: readlinkat
+-----args: 
+fd_dir
+ptr[in, buffer]
+ptr[out, buffer]
+len
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff817654f4
+ffffffff8176560a
+ffffffff81767411
+ffffffff83f22628

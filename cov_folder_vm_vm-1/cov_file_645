@@ -1,0 +1,48 @@
+-----call: rt_sigtimedwait
+-----args: 
+ptr[in, sigset_t]
+ptr[out, siginfo]
+ptr[in, timespec]
+len
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff81190035
+ffffffff8119006d
+ffffffff811900d0
+ffffffff81190125
+ffffffff81190157
+ffffffff81190166
+ffffffff81190c84
+ffffffff81190d08
+ffffffff81190d6c
+ffffffff81190d74
+ffffffff81190d79
+ffffffff81193237
+ffffffff8119326e
+ffffffff8119329b
+ffffffff811932d0
+ffffffff811932ee
+ffffffff811932fe
+ffffffff8119330d
+ffffffff811933b5
+ffffffff81193406
+ffffffff81193413
+ffffffff811a09e3
+ffffffff811a0a75
+ffffffff811a0a98
+ffffffff811a0aa6
+ffffffff811a0ac3
+ffffffff811a0b06
+ffffffff811a0b0e
+ffffffff8134efb8
+ffffffff8134efda
+ffffffff8134f02e
+ffffffff8134f052
+ffffffff81f9f538
+ffffffff81f9f550
+ffffffff81f9f55a
+ffffffff81f9f583
+ffffffff81f9f58d
+ffffffff83f22628

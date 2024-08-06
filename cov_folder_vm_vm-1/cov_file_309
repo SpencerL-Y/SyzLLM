@@ -1,0 +1,28 @@
+-----call: prctl$PR_SET_THP_DISABLE
+-----args: 
+const[41, const]
+intptr
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff811b5b7f
+ffffffff811b5bae
+ffffffff811b5c02
+ffffffff811b63f8
+ffffffff811b6409
+ffffffff811b6444
+ffffffff811b645c
+ffffffff811b6469
+ffffffff811b64a4
+ffffffff811b64be
+ffffffff811b64ee
+ffffffff811b6531
+ffffffff811b6f61
+ffffffff81d4b6ad
+ffffffff81d4ba01
+ffffffff81d581f7
+ffffffff81d5821a
+ffffffff81d58267
+ffffffff81d58281
+ffffffff83f22628
