@@ -444,12 +444,12 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 	}
 	runner.llm_mu.Lock()
 	outputFolder := runner.llmCovFolderPath
-	fileName := filepath.Join(outputFolder, "cov_file_"+strconv.Itoa(runner.fileIndex))
+	fileName := filepath.Join(outputFolder, "cov_file_"+strconv.Itoa(runner.fileIndex)+".txt")
 	file, err := os.Create(fileName)
+	os.Chmod(fileName, 0777)
 	if err != nil {
 		fmt.Println("Error creating file:", err)
 	}
-	defer file.Close()
 	progCalls := req.Prog.Calls
 	printProg := false
 	if res != nil && res.Info != nil {
@@ -484,6 +484,8 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 		// }
 		runner.fileIndex += 1
 	}
+
+	file.Close()
 	req.Done(res)
 	return nil
 }
@@ -752,15 +754,29 @@ func addFallbackSignal(p *prog.Prog, info *flatrpc.ProgInfo) {
 func (runner *Runner) processCovRawFileByLLMLoop() {
 	folder := runner.llmCovFolderPath
 	for {
-		runner.llm_mu.Lock()
+		// time.Sleep(2)
+		// runner.llm_mu.Lock()
 		entries, _ := os.ReadDir(folder)
-		runner.llm_mu.Unlock()
+		// runner.llm_mu.Unlock()
 		for _, item := range entries {
-
 			log.Logf(0, "----- run llm covRawFileLoop")
-			cmd := exec.Command("python3", "./scripts/cov_llm_proc.py "+item.Name())
+			// to see the path we are at
+			pwd := exec.Command("pwd")
+			outpwd, _ := pwd.Output()
+			log.Logf(0, string(outpwd))
+			// to run the llm analysis for the coverage
+
+			cmd := exec.Command("python3", "./scripts/cov_llm_proc.py", runner.llmCovFolderPath+"/"+item.Name())
+			log.Logf(0, cmd.String())
 			out, _ := cmd.Output()
 			log.Logf(0, string(out))
+
+			// remove the cov file:
+			rm := exec.Command("rm", runner.llmCovFolderPath+"/"+item.Name())
+			log.Logf(0, rm.String())
+			outrm, _ := rm.Output()
+			log.Logf(0, "file removed "+string(outrm))
+			log.Logf(0, "----- run llm covRawFileLoop end")
 		}
 
 	}

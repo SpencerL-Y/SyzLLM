@@ -109,12 +109,12 @@ func (fuzzer *Fuzzer) CandidateTriageFinished() bool {
 }
 
 func (fuzzer *Fuzzer) execute(executor queue.Executor, req *queue.Request) *queue.Result {
-	log.Output(1, "-- execute ")
+
 	return fuzzer.executeWithFlags(executor, req, 0)
 }
 
 func (fuzzer *Fuzzer) executeWithFlags(executor queue.Executor, req *queue.Request, flags ProgFlags) *queue.Result {
-	log.Output(1, "-- execute with flags")
+
 	fuzzer.enqueue(executor, req, flags, 0)
 	return req.Wait(fuzzer.ctx)
 }
@@ -260,7 +260,6 @@ func (fuzzer *Fuzzer) startJob(stat *stats.Val, newJob job) {
 }
 
 func (fuzzer *Fuzzer) Next() *queue.Request {
-	log.Output(1, "Fuzzer get next request")
 	req := fuzzer.source.Next()
 	if req == nil {
 		// The fuzzer is not supposed to issue nil requests.
