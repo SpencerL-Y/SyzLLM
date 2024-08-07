@@ -1,0 +1,16 @@
+-----call: msgsnd
+-----args: 
+ipc_msq
+ptr[in, msgbuf]
+len
+msgsnd_flags
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff81d09808
+ffffffff81d0a0b6
+ffffffff81d0b066
+ffffffff81d0b102
+ffffffff81d0b11f
+ffffffff83f22628

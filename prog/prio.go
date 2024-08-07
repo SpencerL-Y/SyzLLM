@@ -229,9 +229,9 @@ type ChoiceTable struct {
 }
 
 func (target *Target) BuildChoiceTable(corpus []*Prog, enabled map[*Syscall]bool) *ChoiceTable {
-	for i, c := range target.Syscalls {
-		fmt.Println(i, ":", c.Name)
-	}
+	// for i, c := range target.Syscalls {
+	// 	fmt.Println(i, ":", c.Name)
+	// }
 	if enabled == nil {
 		enabled = make(map[*Syscall]bool)
 		for _, c := range target.Syscalls {

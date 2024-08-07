@@ -83,7 +83,6 @@ type Runner struct {
 	// llm coverage feedback
 	llmCovFolderPath string
 	fileIndex        int
-	llm_mu           sync.Mutex
 }
 
 type BugFrames struct {
@@ -442,11 +441,12 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 		Output: slices.Clone(msg.Output),
 		Err:    resErr,
 	}
-	runner.llm_mu.Lock()
 	outputFolder := runner.llmCovFolderPath
 	fileName := filepath.Join(outputFolder, "cov_file_"+strconv.Itoa(runner.fileIndex)+".txt")
+
 	file, err := os.Create(fileName)
 	os.Chmod(fileName, 0777)
+	log.Logf(0, "file created: "+fileName)
 	if err != nil {
 		fmt.Println("Error creating file:", err)
 	}
@@ -474,7 +474,6 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 			}
 		}
 	}
-	runner.llm_mu.Unlock()
 	if printProg {
 		// log.Logf(0, "-----Program: \n")
 		// file.WriteString("-----Program: \n")
@@ -483,6 +482,10 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 		// 	file.WriteString(fmt.Sprintf("call: %v\n", call.Meta.Name))
 		// }
 		runner.fileIndex += 1
+	}
+	if runner.fileIndex%1000 == 0 {
+		log.Logf(0, "----- Cov file reached 100, runn analysis")
+		runner.ProcessCovRawFileByLLM()
 	}
 
 	file.Close()
@@ -593,14 +596,13 @@ func (serv *RPCServer) createInstance(name string, injectExec chan<- bool) {
 		fileIndex:        0,
 	}
 	os.Mkdir(runner.llmCovFolderPath, 0777)
+	os.Chmod(runner.llmCovFolderPath, 0777)
 	serv.mu.Lock()
 	if serv.runners[name] != nil {
 		panic(fmt.Sprintf("duplicate instance %s", name))
 	}
 	serv.runners[name] = runner
 	serv.mu.Unlock()
-	// start llm cov processing loop
-	go runner.processCovRawFileByLLMLoop()
 }
 
 // stopInstance prevents further request exchange requests.
@@ -751,33 +753,22 @@ func addFallbackSignal(p *prog.Prog, info *flatrpc.ProgInfo) {
 	}
 }
 
-func (runner *Runner) processCovRawFileByLLMLoop() {
+func (runner *Runner) ProcessCovRawFileByLLM() {
 	folder := runner.llmCovFolderPath
-	for {
-		// time.Sleep(2)
-		// runner.llm_mu.Lock()
-		entries, _ := os.ReadDir(folder)
-		// runner.llm_mu.Unlock()
-		for _, item := range entries {
-			log.Logf(0, "----- run llm covRawFileLoop")
-			// to see the path we are at
-			pwd := exec.Command("pwd")
-			outpwd, _ := pwd.Output()
-			log.Logf(0, string(outpwd))
-			// to run the llm analysis for the coverage
-
-			cmd := exec.Command("python3", "./scripts/cov_llm_proc.py", runner.llmCovFolderPath+"/"+item.Name())
-			log.Logf(0, cmd.String())
-			out, _ := cmd.Output()
-			log.Logf(0, string(out))
-
-			// remove the cov file:
-			rm := exec.Command("rm", runner.llmCovFolderPath+"/"+item.Name())
-			log.Logf(0, rm.String())
-			outrm, _ := rm.Output()
-			log.Logf(0, "file removed "+string(outrm))
-			log.Logf(0, "----- run llm covRawFileLoop end")
-		}
-
+	entries, _ := os.ReadDir(folder)
+	log.Logf(0, "----- run llm covRawFileLoop")
+	for _, item := range entries {
+		// to see the path we are at
+		pwd := exec.Command("pwd")
+		outpwd, _ := pwd.Output()
+		log.Logf(0, string(outpwd))
+		// to run the llm analysis for the coverage
+		cmd := exec.Command("python3", "./scripts/cov_llm_proc.py", runner.llmCovFolderPath+"/"+item.Name())
+		log.Logf(0, cmd.String())
+		out, _ := cmd.Output()
+		log.Logf(0, string(out))
+		log.Logf(0, "----- run llm covRawFileLoop end "+item.Name())
 	}
+	log.Logf(0, "REMOVE FILES")
+	os.Remove(runner.llmCovFolderPath + "/*")
 }
