@@ -1,0 +1,24 @@
+-----call: mbind
+-----args: 
+vma
+len
+mbind_mode
+ptr[in, int64]
+intptr
+mbind_flags
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff81711cd7
+ffffffff81711d01
+ffffffff81711d0f
+ffffffff81711e00
+ffffffff8171bceb
+ffffffff8171bcfa
+ffffffff8171bd09
+ffffffff8171bd32
+ffffffff8171bd52
+ffffffff8171bd57
+ffffffff8171be01
+ffffffff83f22628

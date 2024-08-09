@@ -1,0 +1,20 @@
+-----call: timerfd_gettime
+-----args: 
+fd_timer
+ptr[out, itimerspec]
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff817c2790
+ffffffff817c28e2
+ffffffff817c28fd
+ffffffff817c290c
+ffffffff817c2935
+ffffffff817c2c9c
+ffffffff81867d7c
+ffffffff81867fc3
+ffffffff81868afb
+ffffffff81868b52
+ffffffff81868b57
+ffffffff83f22628

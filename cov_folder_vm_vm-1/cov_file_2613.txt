@@ -1,0 +1,25 @@
+-----call: recvmsg$unix
+-----args: 
+sock_unix
+ptr[inout, recv_msghdr_un]
+recv_flags
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff817c2790
+ffffffff817c28e2
+ffffffff817c28fd
+ffffffff817c290c
+ffffffff817c2935
+ffffffff817c2c9c
+ffffffff8334ba67
+ffffffff8334bb00
+ffffffff8335846a
+ffffffff83358474
+ffffffff83358482
+ffffffff833584d8
+ffffffff833584e0
+ffffffff83358567
+ffffffff833585b1
+ffffffff83f22628

@@ -483,8 +483,8 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 		// }
 		runner.fileIndex += 1
 	}
-	if runner.fileIndex%1000 == 0 {
-		log.Logf(0, "----- Cov file reached 100, runn analysis")
+	if runner.fileIndex%1000 == 0 && runner.fileIndex != 0 {
+		log.Logf(0, "----- Cov file reached 1000, run analysis")
 		runner.ProcessCovRawFileByLLM()
 	}
 

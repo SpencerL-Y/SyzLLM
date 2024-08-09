@@ -47,10 +47,10 @@ if __name__ == "__main__":
                 else:
                     assert(False)
 
-        # command = ["addr2line", "-afi", "-e", "../linuxRepo/linux_new/vmlinux"]
         command = ["cat"]
         addresses_input = "\n".join(call_cov_points) + "\n"
-        result = subprocess.run(command, input=addresses_input, text=True, capture_output=True)
-        print(result)
-        # subprocess.run(f"{command} {line}", shell=True, stdout=f, stderr=subprocess.STDOUT)
-    os.system("cd ./llm_result_files && echo cov_llm_proc_called > cov_file.txt")
+        
+        with open("./temp.txt", "a") as f:
+            result = subprocess.run(command, input=addresses_input, text=True, stdout=f)
+        os.system("rm " + path)
+

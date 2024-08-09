@@ -1,0 +1,17 @@
+-----call: capget
+-----args: 
+ptr[in, cap_header]
+ptr[in, cap_data]
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff81185552
+ffffffff8118556c
+ffffffff81185591
+ffffffff811855b1
+ffffffff81185c09
+ffffffff81185d4c
+ffffffff81185da8
+ffffffff81186621
+ffffffff83f22628

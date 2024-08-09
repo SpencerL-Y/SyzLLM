@@ -1,0 +1,15 @@
+-----call: set_mempolicy_home_node
+-----args: 
+vma
+len
+intptr
+const[0, const]
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff8171a947
+ffffffff8171a9b3
+ffffffff8171ad89
+ffffffff8171af71
+ffffffff83f22628

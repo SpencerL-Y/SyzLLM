@@ -1,0 +1,35 @@
+-----call: ioctl$AUTOFS_DEV_IOCTL_ASKUMOUNT
+-----args: 
+fd_autofs
+const[3222836093, const]
+ptr[inout, autofs_dev_ioctl[args_askumount]]
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff8179d976
+ffffffff8179da27
+ffffffff817c2790
+ffffffff817c28e2
+ffffffff817c28fd
+ffffffff817c290c
+ffffffff817c2935
+ffffffff817c2c9c
+ffffffff83f22628
+-----call: getresuid
+-----args: 
+ptr[out, uid]
+ptr[out, uid]
+ptr[out, uid]
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff811ae25a
+ffffffff811ae332
+ffffffff811ae372
+ffffffff811ae3ae
+ffffffff811ae3c1
+ffffffff811ae3d5
+ffffffff811ae3e8
+ffffffff83f22628

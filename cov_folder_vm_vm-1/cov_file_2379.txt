@@ -1,0 +1,29 @@
+-----call: rt_sigaction
+-----args: 
+int32
+ptr[in, sigaction]
+ptr[out, sigaction]
+len
+ptr[out, sigset_t]
+-----covers:
+ffffffff8108125e
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff811a3f83
+ffffffff811a3f96
+ffffffff811a3faf
+ffffffff811a402c
+ffffffff811a42d8
+ffffffff811a42e8
+ffffffff811a43b4
+ffffffff811a4567
+ffffffff811a456c
+ffffffff811a4575
+ffffffff811a5c24
+ffffffff811a5cb6
+ffffffff811a5d3f
+ffffffff811a5d95
+ffffffff811a5df0
+ffffffff811a5dfa
+ffffffff83f22628

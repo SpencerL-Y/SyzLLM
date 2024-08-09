@@ -1,0 +1,15 @@
+-----call: pkey_mprotect
+-----args: 
+vma
+len
+mmap_prot
+pkey
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff8167b909
+ffffffff8167b94e
+ffffffff8167bb66
+ffffffff8167c4f1
+ffffffff83f22628

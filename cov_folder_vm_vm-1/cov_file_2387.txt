@@ -1,0 +1,11 @@
+-----call: personality
+-----args: 
+personality_flags
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff8115fb20
+ffffffff8115fb7f
+ffffffff8115fbb9
+ffffffff83f22628

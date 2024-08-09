@@ -1,0 +1,51 @@
+-----call: semget$private
+-----args: 
+const[0, const]
+sem_sem_id
+semget_flags
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff81d04852
+ffffffff81d0487e
+ffffffff81d048c6
+ffffffff81d0ed8d
+ffffffff81d0f4e2
+ffffffff81d14e87
+ffffffff81d14f49
+ffffffff81d14f7d
+ffffffff81d14fab
+ffffffff83f22628
+-----call: semctl$IPC_STAT
+-----args: 
+ipc_sem
+const[0, const]
+const[2, const]
+ptr[out, buffer]
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff81d046c9
+ffffffff81d0478b
+ffffffff81d0beae
+ffffffff81d0bed1
+ffffffff81d0bf83
+ffffffff81d0c1ba
+ffffffff81d0c1f9
+ffffffff81d14871
+ffffffff81d1487e
+ffffffff81d1491f
+ffffffff81d14927
+ffffffff81d149a0
+ffffffff81d15271
+ffffffff83e9fed1
+ffffffff83ee7beb
+ffffffff83ee7c0f
+ffffffff83ee7cfa
+ffffffff83ee7d2f
+ffffffff83ee7d62
+ffffffff83ee7d7d
+ffffffff83ee7ef2
+ffffffff83f22628

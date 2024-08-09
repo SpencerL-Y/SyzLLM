@@ -1,0 +1,17 @@
+-----call: clock_nanosleep
+-----args: 
+clock_id
+timer_flags
+ptr[in, timespec]
+ptr[out, timespec]
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff81381289
+ffffffff81381321
+ffffffff8138132f
+ffffffff8138136e
+ffffffff8138137c
+ffffffff8138150c
+ffffffff83f22628

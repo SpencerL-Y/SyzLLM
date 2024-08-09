@@ -1,0 +1,26 @@
+-----call: lsm_get_self_attr
+-----args: 
+lsm_attr_flags
+ptr[out, lsm_ctx]
+ptr[inout, bytesize]
+lsm_get_self_attr_flags
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff81d4e721
+ffffffff81d59a8e
+ffffffff81d59ac8
+ffffffff81d59adb
+ffffffff81d59af7
+ffffffff81d59c86
+ffffffff81d59cd9
+ffffffff81d59ce3
+ffffffff81d59cf2
+ffffffff81d59d0e
+ffffffff81f9f538
+ffffffff81f9f550
+ffffffff81f9f55a
+ffffffff81f9f583
+ffffffff81f9f58d
+ffffffff83f22628

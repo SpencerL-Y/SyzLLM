@@ -1,0 +1,20 @@
+-----call: prctl$PR_SET_SYSCALL_USER_DISPATCH_OFF
+-----args: 
+const[59, const]
+const[0, const]
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff811b5b7f
+ffffffff811b5bae
+ffffffff811b5c02
+ffffffff811b689b
+ffffffff811b6f61
+ffffffff81d4b6ad
+ffffffff81d4ba01
+ffffffff81d581f7
+ffffffff81d5821a
+ffffffff81d58267
+ffffffff81d58281
+ffffffff83f22628

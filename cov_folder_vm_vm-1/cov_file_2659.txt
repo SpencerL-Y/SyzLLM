@@ -1,0 +1,18 @@
+-----call: flistxattr
+-----args: 
+fd
+ptr[out, buffer]
+len
+-----covers:
+ffffffff810ab9a5
+ffffffff810ab9d6
+ffffffff810aba09
+ffffffff817c2790
+ffffffff817c28e2
+ffffffff817c28fd
+ffffffff817c290c
+ffffffff817c2935
+ffffffff817c2c9c
+ffffffff817ef454
+ffffffff817ef580
+ffffffff83f22628
