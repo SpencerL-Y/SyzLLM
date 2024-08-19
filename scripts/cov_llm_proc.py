@@ -11,9 +11,8 @@ if __name__ == "__main__":
     current_file = sys.argv[1]
     close_addr_file = "../linuxRepo/"
     close_points_set = set()
-
-    open
-
+    # TODO: open the pure addr points in addr2line folder and process the coverage files
+    # TODO: add here
 
     print("cov_llm_proc called")
     path = os.path.join(current_file)
