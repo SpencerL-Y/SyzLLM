@@ -24,3 +24,5 @@ executor/syscalls.h
 
 # vscode
 .vscode
+
+cov_folder_vm*
