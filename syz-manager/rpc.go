@@ -757,6 +757,7 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 	folder := runner.llmCovFolderPath
 	entries, _ := os.ReadDir(folder)
 	log.Logf(0, "----- run llm covRawFileLoop")
+	hit_upper_bound = 5
 	for _, item := range entries {
 		// to see the path we are at
 		pwd := exec.Command("pwd")
@@ -771,4 +772,9 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 	}
 	log.Logf(0, "REMOVE FILES")
 	os.Remove(runner.llmCovFolderPath + "/*")
+
+	llm_analysis_command := exec.Command("python3", "./scripts/process_temp.py")
+	log.Logf(0, "process print: "+llm_analysis_command.String())
+	tempout, _ := llm_analysis_command.Output()
+	log.Logf(0, string(tempout))
 }

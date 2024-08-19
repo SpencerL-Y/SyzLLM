@@ -4,7 +4,17 @@ import sys
 import subprocess
 
 if __name__ == "__main__":
+
+
+
+
     current_file = sys.argv[1]
+    close_addr_file = "../linuxRepo/"
+    close_points_set = set()
+
+    open
+
+
     print("cov_llm_proc called")
     path = os.path.join(current_file)
     os.system("pwd")
@@ -22,8 +32,8 @@ if __name__ == "__main__":
                 # detecting and changing the mode
                 if line.find("call") != -1:
                     mode = 1
-                    temp_call_name = ""
-                    temp_call_args = ""
+                    temp_call_name = "call: \n"
+                    temp_call_args = "args: \n"
                     call_cov_points = set()
                 elif line.find("args") != -1:
                     mode = 2

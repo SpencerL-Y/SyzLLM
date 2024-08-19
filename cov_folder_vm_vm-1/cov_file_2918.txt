@@ -1,9 +1,0 @@
------call: getuid
------args: 
------covers:
-ffffffff810ab9a5
-ffffffff810ab9d6
-ffffffff810aba09
-ffffffff811afae2
-ffffffff811afb40
-ffffffff83f22628
