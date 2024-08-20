@@ -1,3 +1,4 @@
+# this file is called from syzkaller root path
 import os
 import time
 import sys
@@ -8,13 +9,21 @@ if __name__ == "__main__":
 
 
 
+    print("cov_llm_proc called")
     current_file = sys.argv[1]
-    close_addr_file = "../linuxRepo/"
+    close_addr_file_path = "../linuxRepo/line2addr/result_addr_info.txt"
     close_points_set = set()
     # TODO: open the pure addr points in addr2line folder and process the coverage files
     # TODO: add here
+    close_addr_file = open(close_addr_file_path, "r")
+    print("collect close addr point")
+    for addr_line in  close_addr_file.readlines():
+        striped_close_addr = addr_line.strip().replace("\n", "")
+        close_points_set.add(striped_close_addr)
+        print("close addr: " + striped_close_addr)
+    
 
-    print("cov_llm_proc called")
+    
     path = os.path.join(current_file)
     os.system("pwd")
     opened_file = open(path, "r")
@@ -22,9 +31,11 @@ if __name__ == "__main__":
     temp_call_name = ""
     temp_call_args = ""
     call_cov_points = set()
+    total_cov_close_points = set()
     call_name_list = []
     call_args_str_list = []
     output_file = "./temp.txt"
+    contain_close_points = False
     with open(output_file, 'a') as f:
         for line in opened_file.readlines():
             if line.startswith("-----"):
@@ -51,15 +62,26 @@ if __name__ == "__main__":
                     # arg
                     temp_call_args += line
                 elif mode == 3:
-                    call_cov_points.add(line.replace('\n', '').replace('\r', '').strip())
+                    stripped_point = line.replace('\n', '').replace('\r', '').strip()
+                    if stripped_point in close_points_set:
+                        contain_close_points = True
+                        call_cov_points.add(stripped_point)
                     # obtain cover and use addr2line
                 else:
                     assert(False)
 
         command = ["cat"]
+        call_sequence = "\n".join(call_name_list) + "\n"
+        arg_sequence = "\n".join(call_args_str_list) + "\n"
         addresses_input = "\n".join(call_cov_points) + "\n"
+
+        final_write_result = "----- call sequence\n" + call_sequence +\
+                             "----- arg sequence\n" + arg_sequence +\
+                             "----- close points covered\n" + addresses_input
         
-        with open("./temp.txt", "a") as f:
-            result = subprocess.run(command, input=addresses_input, text=True, stdout=f)
+        with open("./close_cov_result.txt", "a+") as f:
+            result = subprocess.run(command, input=final_write_result, text=True, stdout=f)
         os.system("rm " + path)
+    if contain_close_points:
+        print("XXXXX REACH")
 
