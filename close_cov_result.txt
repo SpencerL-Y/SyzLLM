@@ -1,0 +1,15 @@
+----- call sequence
+----- call
+pipe2
+----- call
+ioctl$int_in
+----- arg sequence
+----- args
+ptr[out, pipefd]
+pipe_flags
+----- args
+fd
+ioctl_int_in
+ptr[in, int64]
+----- close points covered
+=====

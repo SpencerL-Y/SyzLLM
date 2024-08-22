@@ -456,21 +456,21 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 		for i, c := range res.Info.Calls {
 			if len(c.Cover) > 0 {
 				printProg = true
-				// log.Logf(0, "-----call: %v\n", progCalls[i].Meta.Name)
-				file.WriteString(fmt.Sprintf("-----call: %v\n", progCalls[i].Meta.Name))
-				// log.Logf(0, "-----args: ")
-				file.WriteString("-----args: \n")
+				file.WriteString(fmt.Sprintf("-----call: \n%v", progCalls[i].Meta.Name))
+				file.WriteString("\n")
+				file.WriteString("-----args: ")
 				for _, arg := range progCalls[i].Meta.Args {
-					// HERERE
-					// log.Logf(0, arg.String())
-					file.WriteString(arg.String() + "\n")
+					file.WriteString("\n")
+					file.WriteString(arg.String())
 				}
+				file.WriteString("\n")
 				// log.Logf(0, "-----covers:\n")
-				file.WriteString("-----covers:\n")
+				file.WriteString("-----covers:")
 				for _, cover := range c.Cover {
-					// log.Logf(0, "%x", cover)
-					file.WriteString(fmt.Sprintf("%x\n", cover))
+					file.WriteString("\n")
+					file.WriteString(fmt.Sprintf("%x", cover))
 				}
+				file.WriteString("\n")
 			}
 		}
 	}
@@ -757,23 +757,30 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 	folder := runner.llmCovFolderPath
 	entries, _ := os.ReadDir(folder)
 	log.Logf(0, "----- run llm covRawFileLoop")
-	hit_upper_bound = 5
+	hit_upper_bound := 5
+	hit_num := 0
 	for _, item := range entries {
 		// to see the path we are at
 		pwd := exec.Command("pwd")
 		outpwd, _ := pwd.Output()
 		log.Logf(0, string(outpwd))
 		// to run the llm analysis for the coverage
-		cmd := exec.Command("python3", "./scripts/cov_llm_proc.py", runner.llmCovFolderPath+"/"+item.Name())
+		cmd := exec.Command("python3", "./scripts/process_cov_raw.py", runner.llmCovFolderPath+"/"+item.Name())
 		log.Logf(0, cmd.String())
 		out, _ := cmd.Output()
 		log.Logf(0, string(out))
+		if strings.Contains(string(out), "XXXXX REACH") {
+			hit_num += 1
+		}
 		log.Logf(0, "----- run llm covRawFileLoop end "+item.Name())
+		if hit_num == hit_upper_bound {
+			break
+		}
 	}
 	log.Logf(0, "REMOVE FILES")
 	os.Remove(runner.llmCovFolderPath + "/*")
 
-	llm_analysis_command := exec.Command("python3", "./scripts/process_temp.py")
+	llm_analysis_command := exec.Command("python3", "./scripts/process_close_cov_result.py")
 	log.Logf(0, "process print: "+llm_analysis_command.String())
 	tempout, _ := llm_analysis_command.Output()
 	log.Logf(0, string(tempout))
