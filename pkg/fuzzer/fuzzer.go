@@ -39,9 +39,10 @@ type Fuzzer struct {
 	ctRegenerate chan struct{}
 
 	// SyzLLM added
-	ctLLMReady    bool
-	llmEnabled    bool
-	llm_comm_file string
+	ctLLMReady            bool
+	llmEnabled            bool
+	llm_comm_sig_file     string
+	llm_comm_content_file string
 
 	execQueues
 }
@@ -64,9 +65,10 @@ func NewFuzzer(ctx context.Context, cfg *Config, rnd *rand.Rand,
 
 		// We're okay to lose some of the messages -- if we are already
 		// regenerating the table, we don't want to repeat it right away.
-		ctRegenerate:  make(chan struct{}),
-		llmEnabled:    false,
-		llm_comm_file: "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_file.txt",
+		ctRegenerate:          make(chan struct{}),
+		llmEnabled:            false,
+		llm_comm_sig_file:     "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_sig.txt",
+		llm_comm_content_file: "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_content.txt",
 	}
 	f.execQueues = newExecQueues(f)
 	f.updateChoiceTable(nil)
@@ -324,17 +326,29 @@ func (fuzzer *Fuzzer) updateChoiceTable(programs []*prog.Prog) {
 }
 
 func (fuzzer *Fuzzer) updateChoiceTableWithLLM(programs []*prog.Prog) {
-	// TODO llm: add target function to syscall analyze here
-	var llmFedSyscallNames []string
 
 	// absorb the content from analysis result
 	var newCt *prog.ChoiceTable
 	if fuzzer.ctLLMReady {
+		// TODO llm: add target function to syscall analyze here
+		var llmFedSyscallNames []string
+		data, err := os.ReadFile(fuzzer.llm_comm_content_file)
+		if err != nil {
+			fmt.Println("Error reading file:", err)
+		}
+		syscall_lines := strings.Split(string(data), "\n")
+		
+		for _, llm_syscall := range syscall_lines {
+			if llm_syscall != "" {
+				llmFedSyscallNames = append(llmFedSyscallNames, llm_syscall)
+			}
+		}
+
 		newCt = fuzzer.target.BuildChoiceTableWithLLM(programs, fuzzer.Config.EnabledCalls, llmFedSyscallNames)
 		if rand.Intn(2) == 0 {
 			// disable the ctLLMReady
 			fuzzer.ctLLMReady = false
-			file_name := fuzzer.llm_comm_file
+			file_name := fuzzer.llm_comm_sig_file
 			os.Truncate(file_name, 0)
 		}
 	} else {
@@ -386,8 +400,7 @@ func (fuzzer *Fuzzer) ChoiceTable() *prog.ChoiceTable {
 	// LLM reading:
 	enable_llm := fuzzer.llmEnabled
 	if enable_llm {
-		// adapt to your file name here
-		identifying_file_name := fuzzer.llm_comm_file
+		identifying_file_name := fuzzer.llm_comm_sig_file
 		comm_content, err := os.ReadFile(identifying_file_name)
 		if err != nil {
 			log.Fatal(err)
