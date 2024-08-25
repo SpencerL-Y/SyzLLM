@@ -76,7 +76,7 @@ if __name__ == "__main__":
     stripped_call_sequence = call_sequence.replace("\n", "").strip()
     stripped_arg_sequence = arg_sequence.replace("\n", "").strip()
     stripped_addresses_input = addresses_input.replace("\n", "").strip()
-    if stripped_addresses_input != "" or stripped_arg_sequence != "" or stripped_call_sequence != "": 
+    if (stripped_addresses_input != "" or stripped_arg_sequence != "" or stripped_call_sequence != "") and contain_close_points: 
         final_write_result = "----- call sequence\n" + call_sequence +\
                              "----- arg sequence\n" + arg_sequence +\
                              "----- close points covered\n" + addresses_input

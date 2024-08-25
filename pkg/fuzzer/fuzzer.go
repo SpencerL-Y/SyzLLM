@@ -332,12 +332,13 @@ func (fuzzer *Fuzzer) updateChoiceTableWithLLM(programs []*prog.Prog) {
 	if fuzzer.ctLLMReady {
 		// TODO llm: add target function to syscall analyze here
 		var llmFedSyscallNames []string
+		fuzzer.Logf(0, "UpdateChoiceTable using LLM comm content")
 		data, err := os.ReadFile(fuzzer.llm_comm_content_file)
 		if err != nil {
 			fmt.Println("Error reading file:", err)
 		}
 		syscall_lines := strings.Split(string(data), "\n")
-		
+
 		for _, llm_syscall := range syscall_lines {
 			if llm_syscall != "" {
 				llmFedSyscallNames = append(llmFedSyscallNames, llm_syscall)
@@ -407,6 +408,7 @@ func (fuzzer *Fuzzer) ChoiceTable() *prog.ChoiceTable {
 		}
 		str_content := string(comm_content)
 		if strings.Contains(str_content, "1") {
+			fuzzer.Logf(0, "Set LLM enabled")
 			fuzzer.ctLLMReady = true
 		}
 	}

@@ -4,8 +4,9 @@ import sys
 
 close_addr2funcname_and_filepath = dict()
 
+project_root = "/home/clexma/Desktop/fox3/fuzzing/"
 def parse_func2addr_info():
-    func2addr_info_path = "../linuxRepo/line2addr/func2addr_info.txt"
+    func2addr_info_path = project_root + "linuxRepo/line2addr/func2addr_info.txt"
     curr_func_name = ""
     curr_file_path = ""
     addr_info_file = open(func2addr_info_path, "r+")
@@ -38,7 +39,7 @@ def parse_func2addr_info():
 
 
 def collect_close_cov_info():
-    close_cov_raw_files = open("./close_cov_result.txt")
+    close_cov_raw_files = open( project_root + "syzkaller/close_cov_result.txt")
     # 1 for call sequence, 2 for args and 3 for close points
     collecting_mode = -1
     call_sequence = []
