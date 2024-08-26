@@ -9,8 +9,9 @@ def parse_func2addr_info():
     func2addr_info_path = project_root + "linuxRepo/line2addr/func2addr_info.txt"
     curr_func_name = ""
     curr_file_path = ""
+    curr_source = ""
     addr_info_file = open(func2addr_info_path, "r+")
-    # 1 for funcname, 2 for filepath and 3 for addresses
+    # 1 for funcname, 3 for source, 2 for filepath and 4 for addresses
     reading_mode = -1
     for line in addr_info_file.readlines():
         if line.find("----- funcname") != - 1:
@@ -21,8 +22,11 @@ def parse_func2addr_info():
             reading_mode = 2
             curr_file_path = ""
             continue
-        elif line.find("----- addresses") != -1:
+        elif line.find("----- source") != -1:
             reading_mode = 3
+            curr_source = ""
+        elif line.find("----- addresses") != -1:
+            reading_mode = 4
             continue
         else:
             pass
@@ -33,9 +37,11 @@ def parse_func2addr_info():
         elif reading_mode == 2:
             curr_file_path = line.replace("\n", "")
         elif reading_mode == 3:
+            curr_source = line.replace("\n", "")
+        elif reading_mode == 4:
             temp_addr = line.replace("\n", "")
-            func_name_and_file_path = curr_file_path + "\n" + curr_func_name
-            close_addr2funcname_and_filepath[temp_addr] = func_name_and_file_path
+            addr_source_info = curr_file_path + "\n" + curr_func_name + "\n" + curr_source
+            close_addr2funcname_and_filepath[temp_addr] = addr_source_info
 
 
 def collect_close_cov_info():
@@ -124,4 +130,8 @@ def formulate_program_cov_info_for_llm(close_cov_info):
 if __name__ == "__main__":
     parse_func2addr_info()
     result = collect_close_cov_info()
-    print(result)
+    close_cov_source_code = formulate_program_cov_info_for_llm(result)
+    close_cov_source_code_file = open(project_root + "ChatAnalyzer/close_cov_prog_source_code.txt", "w+")
+    os.truncate(close_cov_source_code_file, 0)
+    close_cov_source_code_file.write(close_cov_source_code)
+    os.chdir(project_root + "ChatAnalyzer/")    

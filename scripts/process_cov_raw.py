@@ -20,7 +20,6 @@ if __name__ == "__main__":
     for addr_line in  close_addr_file.readlines():
         striped_close_addr = addr_line.strip().replace("\n", "")
         close_points_set.add(striped_close_addr)
-        print("close addr: " + striped_close_addr)
     
 
     

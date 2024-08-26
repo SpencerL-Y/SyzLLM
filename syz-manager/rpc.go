@@ -446,7 +446,7 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 
 	file, err := os.Create(fileName)
 	os.Chmod(fileName, 0777)
-	log.Logf(0, "file created: "+fileName)
+	// log.Logf(0, "file created: "+fileName)
 	if err != nil {
 		fmt.Println("Error creating file:", err)
 	}
@@ -757,6 +757,7 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 	folder := runner.llmCovFolderPath
 	entries, _ := os.ReadDir(folder)
 	log.Logf(0, "----- run llm covRawFileLoop")
+	// TODO: improve the logic later
 	hit_upper_bound := 5
 	hit_num := 0
 	for _, item := range entries {
@@ -779,9 +780,11 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 	}
 	log.Logf(0, "REMOVE FILES")
 	os.Remove(runner.llmCovFolderPath + "/*")
-
-	llm_analysis_command := exec.Command("python3", "./scripts/process_close_cov_result.py")
-	log.Logf(0, "process print: "+llm_analysis_command.String())
-	tempout, _ := llm_analysis_command.Output()
-	log.Logf(0, string(tempout))
+	if hit_num != 0 {
+		// the fuzzing actually hit some close functions
+		llm_analysis_command := exec.Command("python3", "./scripts/process_close_cov_result.py")
+		log.Logf(0, "process print: "+llm_analysis_command.String())
+		tempout, _ := llm_analysis_command.Output()
+		log.Logf(0, string(tempout))
+	}
 }

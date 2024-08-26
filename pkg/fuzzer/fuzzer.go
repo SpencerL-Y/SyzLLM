@@ -66,7 +66,7 @@ func NewFuzzer(ctx context.Context, cfg *Config, rnd *rand.Rand,
 		// We're okay to lose some of the messages -- if we are already
 		// regenerating the table, we don't want to repeat it right away.
 		ctRegenerate:          make(chan struct{}),
-		llmEnabled:            false,
+		llmEnabled:            true,
 		llm_comm_sig_file:     "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_sig.txt",
 		llm_comm_content_file: "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_content.txt",
 	}

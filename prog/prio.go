@@ -51,9 +51,9 @@ func (target *Target) CalculatePrioritiesWithLLMBias(corpus []*Prog, biased_indi
 		for j, _ := range prios {
 			_, jInSet := biased_set[j]
 			if jInSet && iInSet {
-				dst[j] += 2
+				dst[j] += 10
 			} else if jInSet || iInSet {
-				dst[j] += 1
+				dst[j] += 5
 			} else {
 				// do nothing
 			}
