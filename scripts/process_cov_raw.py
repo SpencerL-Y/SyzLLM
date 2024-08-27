@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
 
 
-    print("cov_llm_proc called")
+    # print("cov_llm_proc called")
     current_file = sys.argv[1]
     close_addr_file_path = "../linuxRepo/line2addr/result_addr_info.txt"
     close_points_set = set()
