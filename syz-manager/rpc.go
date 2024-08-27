@@ -756,7 +756,7 @@ func addFallbackSignal(p *prog.Prog, info *flatrpc.ProgInfo) {
 func (runner *Runner) ProcessCovRawFileByLLM() {
 	folder := runner.llmCovFolderPath
 	entries, _ := os.ReadDir(folder)
-	log.Logf(0, "----- run llm covRawFileLoop")
+	// log.Logf(0, "----- run llm covRawFileLoop")
 	// TODO: improve the logic later
 	hit_upper_bound := 5
 	hit_num := 0
@@ -764,7 +764,7 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 		// to see the path we are at
 		// to run the llm analysis for the coverage
 		cmd := exec.Command("python3", "./scripts/process_cov_raw.py", runner.llmCovFolderPath+"/"+item.Name())
-		log.Logf(0, cmd.String())
+		// log.Logf(0, cmd.String())
 		out, _ := cmd.Output()
 		if strings.Contains(string(out), "XXXXX REACH") {
 			log.Logf(0, "XXXXX REACH")

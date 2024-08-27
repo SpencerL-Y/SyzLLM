@@ -16,7 +16,7 @@ if __name__ == "__main__":
     # TODO: open the pure addr points in addr2line folder and process the coverage files
     # TODO: add here
     close_addr_file = open(close_addr_file_path, "r")
-    print("collect close addr point")
+    # print("collect close addr point")
     for addr_line in  close_addr_file.readlines():
         striped_close_addr = addr_line.strip().replace("\n", "")
         close_points_set.add(striped_close_addr)
@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     
     path = os.path.join(current_file)
-    os.system("pwd")
+    # os.system("pwd")
     opened_file = open(path, "r")
     mode = -1
     temp_call_name = ""

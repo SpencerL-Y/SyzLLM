@@ -135,3 +135,4 @@ if __name__ == "__main__":
     os.truncate(close_cov_source_code_file, 0)
     close_cov_source_code_file.write(close_cov_source_code)
     os.chdir(project_root + "ChatAnalyzer/")    
+    os.system("python3 chat_interface.py close_ask")

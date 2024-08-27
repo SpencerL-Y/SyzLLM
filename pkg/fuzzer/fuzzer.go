@@ -230,7 +230,6 @@ func signalPrio(p *prog.Prog, info *flatrpc.CallInfo, call int) (prio uint8) {
 }
 
 func (fuzzer *Fuzzer) genFuzz() *queue.Request {
-	log.Output(1, "genFuzz called, queue callback")
 	// Either generate a new input or mutate an existing one.
 	mutateRate := 0.95
 	if !fuzzer.Config.Coverage {
