@@ -83,6 +83,7 @@ type Runner struct {
 	// llm coverage feedback
 	llmCovFolderPath string
 	fileIndex        int
+	processed        bool
 }
 
 type BugFrames struct {
@@ -483,8 +484,9 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 		// }
 		runner.fileIndex += 1
 	}
-	if runner.fileIndex%1000 == 0 && runner.fileIndex != 0 {
-		log.Logf(0, "----- Cov file reached 1000, run analysis")
+	if runner.fileIndex%100 == 0 && runner.fileIndex != 0 {
+		// runner.processed is to make sure that only on processing python is running
+		log.Logf(0, "----- Cov file reached 100, run analysis")
 		runner.ProcessCovRawFileByLLM()
 	}
 
@@ -594,6 +596,7 @@ func (serv *RPCServer) createInstance(name string, injectExec chan<- bool) {
 		rnd:              rand.New(rand.NewSource(time.Now().UnixNano())),
 		llmCovFolderPath: "./cov_folder_vm_" + name,
 		fileIndex:        0,
+		processed:        false,
 	}
 	os.Mkdir(runner.llmCovFolderPath, 0777)
 	os.Chmod(runner.llmCovFolderPath, 0777)

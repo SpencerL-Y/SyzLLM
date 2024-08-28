@@ -67,6 +67,7 @@ func NewFuzzer(ctx context.Context, cfg *Config, rnd *rand.Rand,
 		// regenerating the table, we don't want to repeat it right away.
 		ctRegenerate:          make(chan struct{}),
 		llmEnabled:            true,
+		ctLLMReady:            true,
 		llm_comm_sig_file:     "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_sig.txt",
 		llm_comm_content_file: "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_content.txt",
 	}
@@ -230,6 +231,7 @@ func signalPrio(p *prog.Prog, info *flatrpc.CallInfo, call int) (prio uint8) {
 }
 
 func (fuzzer *Fuzzer) genFuzz() *queue.Request {
+	// log.Output(1, "genFuzz called, queue callback")
 	// Either generate a new input or mutate an existing one.
 	mutateRate := 0.95
 	if !fuzzer.Config.Coverage {
@@ -325,11 +327,11 @@ func (fuzzer *Fuzzer) updateChoiceTable(programs []*prog.Prog) {
 }
 
 func (fuzzer *Fuzzer) updateChoiceTableWithLLM(programs []*prog.Prog) {
-
 	// absorb the content from analysis result
 	var newCt *prog.ChoiceTable
 	if fuzzer.ctLLMReady {
 		// TODO llm: add target function to syscall analyze here
+		log.Output(0, "update choice table with LLM")
 		var llmFedSyscallNames []string
 		fuzzer.Logf(0, "UpdateChoiceTable using LLM comm content")
 		data, err := os.ReadFile(fuzzer.llm_comm_content_file)
@@ -345,14 +347,15 @@ func (fuzzer *Fuzzer) updateChoiceTableWithLLM(programs []*prog.Prog) {
 		}
 
 		newCt = fuzzer.target.BuildChoiceTableWithLLM(programs, fuzzer.Config.EnabledCalls, llmFedSyscallNames)
-		// if rand.Intn(2) == 0 {
-		// 	// disable the ctLLMReady
-		fuzzer.ctLLMReady = false
-		file_name := fuzzer.llm_comm_sig_file
-		os.Truncate(file_name, 0)
-		file_name = fuzzer.llm_comm_content_file
-		os.Truncate(file_name, 0)
-		// }
+		if rand.Intn(5) == 0 {
+			// disable the ctLLMReady
+			fuzzer.ctLLMReady = false
+			log.Output(0, "disable ctLLMReady in update choice table")
+			file_name := fuzzer.llm_comm_sig_file
+			os.Truncate(file_name, 0)
+			file_name = fuzzer.llm_comm_content_file
+			os.Truncate(file_name, 0)
+		}
 	} else {
 		newCt = fuzzer.target.BuildChoiceTable(programs, fuzzer.Config.EnabledCalls)
 	}
@@ -409,7 +412,6 @@ func (fuzzer *Fuzzer) ChoiceTable() *prog.ChoiceTable {
 		}
 		str_content := string(comm_content)
 		if strings.Contains(str_content, "1") {
-			fuzzer.Logf(0, "Set LLM enabled")
 			fuzzer.ctLLMReady = true
 		}
 	}

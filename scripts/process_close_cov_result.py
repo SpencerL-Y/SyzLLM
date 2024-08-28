@@ -45,7 +45,7 @@ def parse_func2addr_info():
 
 
 def collect_close_cov_info():
-    close_cov_raw_files = open( project_root + "syzkaller/close_cov_result.txt")
+    close_cov_raw_files = open( project_root + "syzkaller/close_cov_result.txt", "r")
     # 1 for call sequence, 2 for args and 3 for close points
     collecting_mode = -1
     call_sequence = []
@@ -98,6 +98,8 @@ def collect_close_cov_info():
             covered_points.append(line.replace("\n", ""))
         else:
             pass
+    close_cov_raw_files.close()
+    os.truncate(close_cov_raw_files, 0)
     return final_result
 
 def formulate_program_cov_info_for_llm(close_cov_info):
@@ -135,4 +137,5 @@ if __name__ == "__main__":
     os.truncate(close_cov_source_code_file, 0)
     close_cov_source_code_file.write(close_cov_source_code)
     os.chdir(project_root + "ChatAnalyzer/")    
+    print("close ask")
     os.system("python3 chat_interface.py close_ask")

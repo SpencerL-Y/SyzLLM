@@ -9,6 +9,8 @@ import (
 	"math/rand"
 	"sort"
 	"strings"
+
+	"github.com/google/syzkaller/pkg/log"
 )
 
 // Calulation of call-to-call priorities.
@@ -290,6 +292,7 @@ func (target *Target) BuildChoiceTable(corpus []*Prog, enabled map[*Syscall]bool
 }
 
 func (target *Target) BuildChoiceTableWithLLM(corpus []*Prog, enabled map[*Syscall]bool, llmFedNames []string) *ChoiceTable {
+	log.Logf(0, "Build Choice Table with LLM")
 	var llmFedNameIds map[int]bool
 	llmFedNameIds = make(map[int]bool)
 	for i, c := range target.Syscalls {

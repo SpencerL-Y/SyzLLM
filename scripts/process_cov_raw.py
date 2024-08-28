@@ -18,8 +18,9 @@ if __name__ == "__main__":
     close_addr_file = open(close_addr_file_path, "r")
     # print("collect close addr point")
     for addr_line in  close_addr_file.readlines():
-        striped_close_addr = addr_line.strip().replace("\n", "")
-        close_points_set.add(striped_close_addr)
+        stripped_close_addr = addr_line.strip().replace("\n", "")
+        if stripped_close_addr != "":
+            close_points_set.add(stripped_close_addr)
     
 
     
@@ -79,7 +80,7 @@ if __name__ == "__main__":
         final_write_result = "----- call sequence\n" + call_sequence +\
                              "----- arg sequence\n" + arg_sequence +\
                              "----- close points covered\n" + addresses_input
-        final_write_result += "=====\n"
+        final_write_result += "\n=====\n"
     
         with open("./close_cov_result.txt", "a+") as f:
             result = subprocess.run(command, input=final_write_result, text=True, stdout=f)
