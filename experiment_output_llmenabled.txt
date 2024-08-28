@@ -1,0 +1,1008 @@
+2024/08/28 21:09:31 serving http on http://127.0.0.1:56741
+2024/08/28 21:09:31 serving rpc on tcp://[::]:42803
+2024/08/28 21:09:31 booting test machines...
+2024/08/28 21:09:31 wait for the connection from test machine...
+2024/08/28 21:09:42 XXX Fuzzer command: 
+/syz-fuzzer -executor=/syz-executor -name=vm-1 -arch=amd64 -manager=localhost:42803 -sandbox=none -cover=true -debug=false  -optional=slowdown=1:sandbox_arg=0:pprof_port=6060
+2024/08/28 21:09:48 machine check:
+failed to read the following files in the VM:
+/dev/raw-gadget                             : open /dev/raw-gadget: no such file or directory
+
+BinFmtMisc              : enabled
+Comparisons             : call 0 failed with errno 38
+Coverage                : enabled
+DelayKcovMmap           : enabled
+DevlinkPCI              : PCI device 0000:00:10.0 is not available.  (errno 2: No such file or directory).
+ExtraCoverage           : enabled
+Fault                   : CONFIG_FAULT_INJECTION is not enabled.  (errno 2: No such file or directory).
+KCSAN                   : write(/sys/kernel/debug/kcsan, on) failed.  (errno 2: No such file or directory).
+LRWPANEmulation         : netlink: failed to get family id for nl802154: No such file or directory.  netlink_query_family_id failed.  (errno 2: No such file or directory).
+Leak                    : failed to write(kmemleak, "scan=off").  (errno 2: No such file or directory).
+NetDevices              : enabled
+NetInjection            : tun: can't open /dev/net/tun.  (errno 2: No such file or directory).
+NicVF                   : PCI device 0000:00:11.0 is not available.  (errno 2: No such file or directory).
+SandboxAndroid          : enabled
+SandboxNamespace        : enabled
+SandboxSetuid           : enabled
+Swap                    : enabled
+USBEmulation            : failed to chmod /dev/raw-gadget.  (errno 2: No such file or directory).
+VhciInjection           : socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_HCI) failed.  (errno 97: Address family not supported by protocol).
+WifiEmulation           : netlink_query_family_id failed.  (errno 2: No such file or directory).
+syscalls                : 2193/4499
+
+2024/08/28 21:09:56 corpus                  : 29 (0 broken, 29 seeds)
+2024/08/28 21:10:00 update choice table with LLM
+2024/08/28 21:10:00 UpdateChoiceTable using LLM comm content
+2024/08/28 21:10:00 Build Choice Table with LLM
+2024/08/28 21:10:00 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:01 candidates=0 corpus=38 coverage=14130 exec total=1075 (35/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:10:02 REMOVE FILES
+2024/08/28 21:10:02 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:02 REMOVE FILES
+2024/08/28 21:10:02 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:02 REMOVE FILES
+2024/08/28 21:10:02 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:02 REMOVE FILES
+2024/08/28 21:10:10 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:11 REMOVE FILES
+2024/08/28 21:10:11 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:11 REMOVE FILES
+2024/08/28 21:10:11 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:11 REMOVE FILES
+2024/08/28 21:10:11 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:11 REMOVE FILES
+2024/08/28 21:10:11 candidates=0 corpus=63 coverage=14488 exec total=1911 (47/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:10:15 update choice table with LLM
+2024/08/28 21:10:15 UpdateChoiceTable using LLM comm content
+2024/08/28 21:10:15 Build Choice Table with LLM
+2024/08/28 21:10:16 disable ctLLMReady in update choice table
+2024/08/28 21:10:21 candidates=0 corpus=72 coverage=14567 exec total=2528 (50/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:10:22 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:23 REMOVE FILES
+2024/08/28 21:10:23 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:23 REMOVE FILES
+2024/08/28 21:10:23 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:23 REMOVE FILES
+2024/08/28 21:10:23 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:23 REMOVE FILES
+2024/08/28 21:10:23 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:23 REMOVE FILES
+2024/08/28 21:10:31 candidates=0 corpus=79 coverage=14664 exec total=3068 (51/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:10:41 candidates=0 corpus=95 coverage=14742 exec total=3864 (55/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:10:42 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:43 REMOVE FILES
+2024/08/28 21:10:43 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:43 REMOVE FILES
+2024/08/28 21:10:51 candidates=0 corpus=104 coverage=14776 exec total=4419 (55/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:10:54 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:55 REMOVE FILES
+2024/08/28 21:10:55 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:10:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:10:56 REMOVE FILES
+2024/08/28 21:11:01 candidates=0 corpus=109 coverage=14813 exec total=5077 (56/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:11:11 candidates=0 corpus=128 coverage=14949 exec total=5756 (57/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:11:17 ----- Cov file reached 100, run analysis
+2024/08/28 21:11:18 REMOVE FILES
+2024/08/28 21:11:18 ----- Cov file reached 100, run analysis
+2024/08/28 21:11:18 REMOVE FILES
+2024/08/28 21:11:18 ----- Cov file reached 100, run analysis
+2024/08/28 21:11:18 REMOVE FILES
+2024/08/28 21:11:18 ----- Cov file reached 100, run analysis
+2024/08/28 21:11:18 REMOVE FILES
+2024/08/28 21:11:21 candidates=0 corpus=149 coverage=15061 exec total=6207 (56/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:11:31 candidates=0 corpus=167 coverage=15181 exec total=6915 (57/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:11:39 ----- Cov file reached 100, run analysis
+2024/08/28 21:11:40 REMOVE FILES
+2024/08/28 21:11:40 ----- Cov file reached 100, run analysis
+2024/08/28 21:11:40 REMOVE FILES
+2024/08/28 21:11:40 ----- Cov file reached 100, run analysis
+2024/08/28 21:11:40 REMOVE FILES
+2024/08/28 21:11:40 ----- Cov file reached 100, run analysis
+2024/08/28 21:11:40 REMOVE FILES
+2024/08/28 21:11:41 candidates=0 corpus=194 coverage=16048 exec total=7723 (59/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:11:51 candidates=0 corpus=216 coverage=16264 exec total=8335 (59/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:11:56 ----- Cov file reached 100, run analysis
+2024/08/28 21:11:58 REMOVE FILES
+2024/08/28 21:11:58 ----- Cov file reached 100, run analysis
+2024/08/28 21:11:58 REMOVE FILES
+2024/08/28 21:12:01 candidates=0 corpus=213 coverage=17522 exec total=8668 (57/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:12:05 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:07 REMOVE FILES
+2024/08/28 21:12:07 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:07 REMOVE FILES
+2024/08/28 21:12:07 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:07 REMOVE FILES
+2024/08/28 21:12:07 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:07 REMOVE FILES
+2024/08/28 21:12:11 candidates=0 corpus=235 coverage=17589 exec total=9374 (58/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:12:21 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:21 candidates=0 corpus=269 coverage=18229 exec total=10286 (60/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:12:22 REMOVE FILES
+2024/08/28 21:12:22 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:22 REMOVE FILES
+2024/08/28 21:12:22 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:22 REMOVE FILES
+2024/08/28 21:12:22 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:22 REMOVE FILES
+2024/08/28 21:12:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:31 candidates=0 corpus=307 coverage=18441 exec total=11992 (66/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:12:31 REMOVE FILES
+2024/08/28 21:12:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:32 ----- Cov file reached 100, run analysis
+2024/08/28 21:12:32 REMOVE FILES
+2024/08/28 21:12:41 candidates=0 corpus=324 coverage=19150 exec total=12690 (66/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:12:51 candidates=0 corpus=327 coverage=19175 exec total=12801 (64/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:13:01 candidates=0 corpus=323 coverage=19348 exec total=13125 (62/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:13:11 candidates=0 corpus=325 coverage=19650 exec total=13164 (59/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:13:21 candidates=0 corpus=327 coverage=19666 exec total=13226 (57/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:13:31 candidates=0 corpus=330 coverage=19708 exec total=13274 (55/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:13:41 candidates=0 corpus=333 coverage=19741 exec total=13318 (53/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:13:51 candidates=0 corpus=335 coverage=19767 exec total=13389 (51/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:14:01 candidates=0 corpus=332 coverage=19768 exec total=13445 (49/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:14:11 candidates=0 corpus=333 coverage=19770 exec total=13493 (48/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:14:16 ----- Cov file reached 100, run analysis
+2024/08/28 21:14:17 REMOVE FILES
+2024/08/28 21:14:17 ----- Cov file reached 100, run analysis
+2024/08/28 21:14:17 REMOVE FILES
+2024/08/28 21:14:17 ----- Cov file reached 100, run analysis
+2024/08/28 21:14:17 REMOVE FILES
+2024/08/28 21:14:17 ----- Cov file reached 100, run analysis
+2024/08/28 21:14:17 REMOVE FILES
+2024/08/28 21:14:21 candidates=0 corpus=336 coverage=19771 exec total=13514 (46/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:14:31 candidates=0 corpus=336 coverage=19771 exec total=13551 (45/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:14:41 candidates=0 corpus=336 coverage=19771 exec total=13598 (43/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:14:51 candidates=0 corpus=337 coverage=19771 exec total=13627 (42/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:15:01 candidates=0 corpus=337 coverage=19771 exec total=13662 (41/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:15:11 candidates=0 corpus=337 coverage=19771 exec total=13706 (40/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:15:21 candidates=0 corpus=337 coverage=19771 exec total=13753 (39/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:15:31 candidates=0 corpus=339 coverage=19822 exec total=13786 (38/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:15:41 candidates=0 corpus=340 coverage=19824 exec total=13819 (37/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:15:51 candidates=0 corpus=340 coverage=19824 exec total=13862 (36/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:16:01 candidates=0 corpus=341 coverage=19849 exec total=13909 (35/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:16:11 candidates=0 corpus=344 coverage=19849 exec total=13951 (34/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:16:21 candidates=0 corpus=344 coverage=19849 exec total=13968 (34/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:16:31 candidates=0 corpus=345 coverage=19850 exec total=14001 (33/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:16:35 ----- Cov file reached 100, run analysis
+2024/08/28 21:16:36 REMOVE FILES
+2024/08/28 21:16:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:16:36 REMOVE FILES
+2024/08/28 21:16:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:16:36 REMOVE FILES
+2024/08/28 21:16:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:16:36 REMOVE FILES
+2024/08/28 21:16:41 candidates=0 corpus=353 coverage=20027 exec total=14275 (33/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:16:51 candidates=0 corpus=361 coverage=20074 exec total=14491 (32/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:17:00 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:01 REMOVE FILES
+2024/08/28 21:17:01 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:01 REMOVE FILES
+2024/08/28 21:17:01 candidates=0 corpus=371 coverage=20278 exec total=14895 (33/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:17:11 candidates=0 corpus=389 coverage=20981 exec total=15540 (33/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:17:16 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:17 REMOVE FILES
+2024/08/28 21:17:17 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:17 REMOVE FILES
+2024/08/28 21:17:17 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:17 REMOVE FILES
+2024/08/28 21:17:17 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:17 REMOVE FILES
+2024/08/28 21:17:21 candidates=0 corpus=410 coverage=21461 exec total=16336 (34/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:17:31 candidates=0 corpus=429 coverage=21582 exec total=17389 (36/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:17:35 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:36 REMOVE FILES
+2024/08/28 21:17:36 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:37 REMOVE FILES
+2024/08/28 21:17:37 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:38 REMOVE FILES
+2024/08/28 21:17:38 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:38 REMOVE FILES
+2024/08/28 21:17:38 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:38 REMOVE FILES
+2024/08/28 21:17:38 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:38 REMOVE FILES
+2024/08/28 21:17:38 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:38 REMOVE FILES
+2024/08/28 21:17:38 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:38 REMOVE FILES
+2024/08/28 21:17:38 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:38 REMOVE FILES
+2024/08/28 21:17:38 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:38 REMOVE FILES
+2024/08/28 21:17:41 candidates=0 corpus=471 coverage=21790 exec total=18651 (38/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:17:48 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:49 REMOVE FILES
+2024/08/28 21:17:49 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:49 REMOVE FILES
+2024/08/28 21:17:49 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:49 REMOVE FILES
+2024/08/28 21:17:49 ----- Cov file reached 100, run analysis
+2024/08/28 21:17:49 REMOVE FILES
+2024/08/28 21:17:51 candidates=0 corpus=516 coverage=22344 exec total=19581 (39/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:17:59 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:00 REMOVE FILES
+2024/08/28 21:18:00 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:00 REMOVE FILES
+2024/08/28 21:18:00 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:00 REMOVE FILES
+2024/08/28 21:18:00 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:00 REMOVE FILES
+2024/08/28 21:18:01 candidates=0 corpus=523 coverage=22504 exec total=20238 (39/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:18:09 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:10 REMOVE FILES
+2024/08/28 21:18:10 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:10 REMOVE FILES
+2024/08/28 21:18:10 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:10 REMOVE FILES
+2024/08/28 21:18:11 candidates=0 corpus=574 coverage=22993 exec total=21443 (41/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:18:21 candidates=0 corpus=590 coverage=23106 exec total=21821 (41/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:18:26 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:27 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:28 REMOVE FILES
+2024/08/28 21:18:31 candidates=0 corpus=621 coverage=23252 exec total=22558 (41/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:18:41 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:41 candidates=0 corpus=667 coverage=23483 exec total=23568 (42/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:18:42 REMOVE FILES
+2024/08/28 21:18:42 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:42 REMOVE FILES
+2024/08/28 21:18:42 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:42 REMOVE FILES
+2024/08/28 21:18:42 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:43 REMOVE FILES
+2024/08/28 21:18:51 candidates=0 corpus=710 coverage=23993 exec total=24709 (44/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:18:52 ----- Cov file reached 100, run analysis
+2024/08/28 21:18:54 REMOVE FILES
+2024/08/28 21:19:01 candidates=0 corpus=732 coverage=24580 exec total=26237 (46/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:19:11 candidates=0 corpus=744 coverage=24639 exec total=26540 (45/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:19:20 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:21 REMOVE FILES
+2024/08/28 21:19:21 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:21 REMOVE FILES
+2024/08/28 21:19:21 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:21 REMOVE FILES
+2024/08/28 21:19:21 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:21 REMOVE FILES
+2024/08/28 21:19:21 candidates=0 corpus=748 coverage=24672 exec total=26629 (45/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:19:28 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:29 REMOVE FILES
+2024/08/28 21:19:29 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:29 REMOVE FILES
+2024/08/28 21:19:29 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:29 REMOVE FILES
+2024/08/28 21:19:29 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:29 REMOVE FILES
+2024/08/28 21:19:29 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:29 REMOVE FILES
+2024/08/28 21:19:29 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:29 REMOVE FILES
+2024/08/28 21:19:29 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:29 REMOVE FILES
+2024/08/28 21:19:29 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:29 REMOVE FILES
+2024/08/28 21:19:29 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:29 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:30 REMOVE FILES
+2024/08/28 21:19:30 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:31 REMOVE FILES
+2024/08/28 21:19:31 candidates=0 corpus=795 coverage=25268 exec total=27556 (45/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:19:41 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:41 candidates=0 corpus=842 coverage=25435 exec total=28670 (47/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:19:42 REMOVE FILES
+2024/08/28 21:19:42 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:42 REMOVE FILES
+2024/08/28 21:19:42 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:42 REMOVE FILES
+2024/08/28 21:19:42 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:42 REMOVE FILES
+2024/08/28 21:19:51 candidates=0 corpus=887 coverage=25871 exec total=29560 (47/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:19:52 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:53 REMOVE FILES
+2024/08/28 21:19:53 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:53 REMOVE FILES
+2024/08/28 21:19:53 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:53 REMOVE FILES
+2024/08/28 21:19:53 ----- Cov file reached 100, run analysis
+2024/08/28 21:19:53 REMOVE FILES
+2024/08/28 21:20:01 candidates=0 corpus=865 coverage=25926 exec total=29640 (47/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:20:11 candidates=0 corpus=888 coverage=26627 exec total=30282 (47/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:20:12 ----- Cov file reached 100, run analysis
+2024/08/28 21:20:13 REMOVE FILES
+2024/08/28 21:20:13 ----- Cov file reached 100, run analysis
+2024/08/28 21:20:13 REMOVE FILES
+2024/08/28 21:20:21 candidates=0 corpus=922 coverage=26991 exec total=31076 (47/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:20:31 candidates=0 corpus=927 coverage=27086 exec total=31135 (47/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:20:41 ----- Cov file reached 100, run analysis
+2024/08/28 21:20:41 candidates=0 corpus=938 coverage=27333 exec total=31358 (46/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:20:42 REMOVE FILES
+2024/08/28 21:20:42 ----- Cov file reached 100, run analysis
+2024/08/28 21:20:42 REMOVE FILES
+2024/08/28 21:20:42 ----- Cov file reached 100, run analysis
+2024/08/28 21:20:42 REMOVE FILES
+2024/08/28 21:20:42 ----- Cov file reached 100, run analysis
+2024/08/28 21:20:42 REMOVE FILES
+2024/08/28 21:20:51 candidates=0 corpus=952 coverage=27466 exec total=31644 (46/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:21:01 candidates=0 corpus=936 coverage=27552 exec total=31805 (46/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:21:11 candidates=0 corpus=940 coverage=27621 exec total=31867 (45/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:21:21 candidates=0 corpus=943 coverage=27626 exec total=31906 (44/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:21:26 ----- Cov file reached 100, run analysis
+2024/08/28 21:21:27 REMOVE FILES
+2024/08/28 21:21:27 ----- Cov file reached 100, run analysis
+2024/08/28 21:21:27 REMOVE FILES
+2024/08/28 21:21:31 candidates=0 corpus=976 coverage=27767 exec total=32555 (45/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:21:41 candidates=0 corpus=1006 coverage=28118 exec total=33338 (45/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:21:51 candidates=0 corpus=1007 coverage=28125 exec total=33417 (45/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:22:01 candidates=0 corpus=993 coverage=28126 exec total=33445 (44/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:22:11 candidates=0 corpus=994 coverage=28146 exec total=33484 (44/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:22:21 candidates=0 corpus=996 coverage=28162 exec total=33533 (43/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:22:23 ----- Cov file reached 100, run analysis
+2024/08/28 21:22:24 REMOVE FILES
+2024/08/28 21:22:24 ----- Cov file reached 100, run analysis
+2024/08/28 21:22:24 REMOVE FILES
+2024/08/28 21:22:24 ----- Cov file reached 100, run analysis
+2024/08/28 21:22:24 REMOVE FILES
+2024/08/28 21:22:24 ----- Cov file reached 100, run analysis
+2024/08/28 21:22:24 REMOVE FILES
+2024/08/28 21:22:31 candidates=0 corpus=997 coverage=28193 exec total=33582 (43/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:22:41 candidates=0 corpus=998 coverage=28295 exec total=33625 (42/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:22:51 candidates=0 corpus=1021 coverage=28455 exec total=34236 (42/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:23:01 candidates=0 corpus=1019 coverage=28525 exec total=34609 (42/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:23:09 ----- Cov file reached 100, run analysis
+2024/08/28 21:23:10 XXXXX REACH
+2024/08/28 21:23:10 XXXXX REACH
+2024/08/28 21:23:10 XXXXX REACH
+2024/08/28 21:23:10 XXXXX REACH
+2024/08/28 21:23:10 XXXXX REACH
+2024/08/28 21:23:10 REMOVE FILES
+2024/08/28 21:23:10 process print: /usr/bin/python3 ./scripts/process_close_cov_result.py
+2024/08/28 21:23:10 
+2024/08/28 21:23:10 ----- Cov file reached 100, run analysis
+2024/08/28 21:23:10 XXXXX REACH
+2024/08/28 21:23:11 XXXXX REACH
+2024/08/28 21:23:11 XXXXX REACH
+2024/08/28 21:23:11 XXXXX REACH
+2024/08/28 21:23:11 REMOVE FILES
+2024/08/28 21:23:11 process print: /usr/bin/python3 ./scripts/process_close_cov_result.py
+2024/08/28 21:23:11 
+2024/08/28 21:23:11 ----- Cov file reached 100, run analysis
+2024/08/28 21:23:11 REMOVE FILES
+2024/08/28 21:23:11 ----- Cov file reached 100, run analysis
+2024/08/28 21:23:11 REMOVE FILES
+2024/08/28 21:23:11 candidates=0 corpus=1029 coverage=28535 exec total=34854 (42/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:23:21 candidates=0 corpus=1053 coverage=28626 exec total=35323 (42/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:23:31 candidates=0 corpus=1054 coverage=28632 exec total=35366 (42/sec) fuzzing VMs=1 reproducing=0 
+2024/08/28 21:23:41 candidates=0 corpus=1055 coverage=28632 exec total=35393 (41/sec) fuzzing VMs=1 reproducing=0 
+SIGINT: shutting down...
+2024/08/28 21:23:44 vm-1: running for 14m2.055386136s, restarting

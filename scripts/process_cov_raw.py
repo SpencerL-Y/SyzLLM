@@ -19,7 +19,7 @@ if __name__ == "__main__":
     # print("collect close addr point")
     for addr_line in  close_addr_file.readlines():
         stripped_close_addr = addr_line.strip().replace("\n", "")
-        if stripped_close_addr != "":
+        if "f" in stripped_close_addr:
             close_points_set.add(stripped_close_addr)
     
 
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     command = ["cat"]
     call_sequence = "".join(call_name_list) 
     arg_sequence = "".join(call_args_str_list) 
-    addresses_input = "".join(call_cov_points) 
+    addresses_input = "\n".join(call_cov_points) 
     stripped_call_sequence = call_sequence.replace("\n", "").strip()
     stripped_arg_sequence = arg_sequence.replace("\n", "").strip()
     stripped_addresses_input = addresses_input.replace("\n", "").strip()

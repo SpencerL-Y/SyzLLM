@@ -67,7 +67,8 @@ def collect_close_cov_info():
             collecting_mode = 3
             continue
         elif line.find("=====") != -1:
-            final_result.append((call_sequence.copy(), args_sequence.copy(), covered_points.copy()))
+            if len(covered_points) != 0:
+                final_result.append((call_sequence.copy(), args_sequence.copy(), covered_points.copy()))
             call_sequence = []
             args_sequence = []
             covered_points = []
@@ -95,11 +96,12 @@ def collect_close_cov_info():
             else:
                 temp_args.append(line.replace("\n", ""))
         elif collecting_mode == 3:
-            covered_points.append(line.replace("\n", ""))
+            if line.strip().replace("\n", "") != "":
+                covered_points.append(line.replace("\n", ""))
         else:
             pass
     close_cov_raw_files.close()
-    os.truncate(close_cov_raw_files, 0)
+    os.truncate(project_root + "syzkaller/close_cov_result.txt", 0)
     return final_result
 
 def formulate_program_cov_info_for_llm(close_cov_info):
@@ -134,7 +136,7 @@ if __name__ == "__main__":
     result = collect_close_cov_info()
     close_cov_source_code = formulate_program_cov_info_for_llm(result)
     close_cov_source_code_file = open(project_root + "ChatAnalyzer/close_cov_prog_source_code.txt", "w+")
-    os.truncate(close_cov_source_code_file, 0)
+    os.truncate(project_root + "ChatAnalyzer/close_cov_prog_source_code.txt", 0)
     close_cov_source_code_file.write(close_cov_source_code)
     os.chdir(project_root + "ChatAnalyzer/")    
     print("close ask")

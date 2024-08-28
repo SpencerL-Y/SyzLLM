@@ -347,15 +347,15 @@ func (fuzzer *Fuzzer) updateChoiceTableWithLLM(programs []*prog.Prog) {
 		}
 
 		newCt = fuzzer.target.BuildChoiceTableWithLLM(programs, fuzzer.Config.EnabledCalls, llmFedSyscallNames)
-		if rand.Intn(5) == 0 {
-			// disable the ctLLMReady
-			fuzzer.ctLLMReady = false
-			log.Output(0, "disable ctLLMReady in update choice table")
-			file_name := fuzzer.llm_comm_sig_file
-			os.Truncate(file_name, 0)
-			file_name = fuzzer.llm_comm_content_file
-			os.Truncate(file_name, 0)
-		}
+		// if rand.Intn(5) == 0 {
+		// 	// disable the ctLLMReady
+		// 	fuzzer.ctLLMReady = false
+		// 	log.Output(0, "disable ctLLMReady in update choice table")
+		// 	file_name := fuzzer.llm_comm_sig_file
+		// 	os.Truncate(file_name, 0)
+		// 	file_name = fuzzer.llm_comm_content_file
+		// 	os.Truncate(file_name, 0)
+		// }
 	} else {
 		newCt = fuzzer.target.BuildChoiceTable(programs, fuzzer.Config.EnabledCalls)
 	}
