@@ -44,25 +44,25 @@ func (target *Target) CalculatePriorities(corpus []*Prog) [][]int32 {
 }
 
 func (target *Target) CalculatePrioritiesWithLLMBias(corpus []*Prog, biased_indices map[int]bool) [][]int32 {
-	biased_set := biased_indices
-
-	static := target.CalculatePriorities(corpus)
-	for i, prios := range static {
-		dst := static[i]
-		_, iInSet := biased_set[i]
-		for j, _ := range prios {
-			_, jInSet := biased_set[j]
-			if jInSet && iInSet {
-				dst[j] += 10
-			} else if jInSet || iInSet {
-				dst[j] += 5
-			} else {
-				// do nothing
+	static := target.calcStaticPriorities()
+	if len(corpus) != 0 {
+		// Let's just sum the static and dynamic distributions.
+		dynamic := target.calcDynamicPrio(corpus)
+		for i, prios := range dynamic {
+			dst := static[i]
+			for j, p := range prios {
+				dst[j] += p
 			}
 		}
 	}
-	// TODO llm: change value here
-	normalizePrios(static)
+	// add the weight of llm provided result
+	llm_prios := target.calcLLMResultPrio(biased_indices)
+	for i, prios := range llm_prios {
+		dst := static[i]
+		for j, p := range prios {
+			dst[j] += p
+		}
+	}
 	return static
 }
 
@@ -199,6 +199,30 @@ func (target *Target) calcDynamicPrio(corpus []*Prog) [][]int32 {
 			// it happened 50 or 100 times.
 			// Let's use sqrt() to lessen the effect of large counts.
 			prios[i][j] = int32(2.0 * math.Sqrt(float64(val)))
+		}
+	}
+	normalizePrios(prios)
+	return prios
+}
+
+func (target *Target) calcLLMResultPrio(biased_indices map[int]bool) [][]int32 {
+	prios := make([][]int32, len(target.Syscalls))
+	for i := range prios {
+		prios[i] = make([]int32, len(target.Syscalls))
+	}
+	for i, row := range prios {
+		if biased_indices[i] {
+			for j := range row {
+				row[j] = 1
+			}
+		} else {
+			for j := range row {
+				if biased_indices[j] {
+					row[j] = 1
+				} else {
+					row[j] = 0
+				}
+			}
 		}
 	}
 	normalizePrios(prios)
