@@ -20,7 +20,7 @@ if __name__ == "__main__":
     for addr_line in  close_addr_file.readlines():
         stripped_close_addr = addr_line.strip().replace("\n", "")
         if "f" in stripped_close_addr:
-            print("close point collected: " + stripped_close_addr)
+            # print("close point collected: " + stripped_close_addr)
             close_points_set.add(stripped_close_addr)
     
 
@@ -78,12 +78,12 @@ if __name__ == "__main__":
     stripped_call_sequence = call_sequence.replace("\n", "").strip()
     stripped_arg_sequence = arg_sequence.replace("\n", "").strip()
     stripped_addresses_input = addresses_input.strip().replace("\n", "").strip()
-    if (stripped_addresses_input != "" or stripped_arg_sequence != "" or stripped_call_sequence != "") and contain_close_points: 
+    if (stripped_arg_sequence != "" or stripped_call_sequence != "") and stripped_addresses_input != ""  and contain_close_points: 
         final_write_result = "----- call sequence\n" + call_sequence +\
                              "----- arg sequence\n" + arg_sequence +\
                              "----- close points covered\n" + addresses_input
         final_write_result += "\n=====\n"
-    
+        print("write hit cov: " + addresses_input)
         with open("./close_cov_result.txt", "a+") as f:
             result = subprocess.run(command, input=final_write_result, text=True, stdout=f)
     os.system("rm " + path)
