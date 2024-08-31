@@ -101,7 +101,7 @@ def collect_close_cov_info():
         else:
             pass
     close_cov_raw_files.close()
-    os.truncate(project_root + "syzkaller/close_cov_result.txt", 0)
+    # os.truncate(project_root + "syzkaller/close_cov_result.txt", 0)
     return final_result
 
 def formulate_program_cov_info_for_llm(close_cov_info):
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     result = collect_close_cov_info()
     close_cov_source_code = formulate_program_cov_info_for_llm(result)
     close_cov_source_code_file = open(project_root + "ChatAnalyzer/close_cov_prog_source_code.txt", "w+")
-    os.truncate(project_root + "ChatAnalyzer/close_cov_prog_source_code.txt", 0)
+    # os.truncate(project_root + "ChatAnalyzer/close_cov_prog_source_code.txt", 0)
     close_cov_source_code_file.write(close_cov_source_code)
     os.chdir(project_root + "ChatAnalyzer/")    
     print("close ask")

@@ -769,6 +769,7 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 		cmd := exec.Command("python3", "./scripts/process_cov_raw.py", runner.llmCovFolderPath+"/"+item.Name())
 		// log.Logf(0, cmd.String())
 		out, _ := cmd.Output()
+		log.Logf(0, string(out))
 		if strings.Contains(string(out), "XXXXX REACH") {
 			log.Logf(0, "XXXXX REACH")
 			hit_num += 1
