@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 
 close_addr2funcname_and_filepath = dict()
@@ -136,8 +137,13 @@ if __name__ == "__main__":
     close_cov_source_code = formulate_program_cov_info_for_llm(result)
     close_cov_source_code_file = open(project_root + "ChatAnalyzer/close_cov_prog_source_code.txt", "w+")
     close_cov_source_code_file.write(close_cov_source_code)
+    # print(f"Python executable: {sys.executable}")
+    # print(f"Environment: {os.environ}")
     os.chdir(project_root + "ChatAnalyzer/")    
     print("close ask")
-    os.system("python3 chat_interface.py close_ask")
+    close_ask_cmd = "python3 chat_interface.py close_ask"
+    result = subprocess.run(close_ask_cmd, shell=True, text=True, capture_output=True, env=os.environ.copy())
+    # print("close ask Error: " + result.stderr)
+    print("close ask Output: " + result.stdout)
     os.truncate(project_root + "ChatAnalyzer/close_cov_prog_source_code.txt", 0)
     os.truncate(project_root + "syzkaller/close_cov_result.txt", 0)

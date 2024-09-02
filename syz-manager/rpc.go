@@ -484,9 +484,9 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 		// }
 		runner.fileIndex += 1
 	}
-	if runner.fileIndex%100 == 0 && runner.fileIndex != 0 {
+	if runner.fileIndex%500 == 0 && runner.fileIndex != 0 {
 		// runner.processed is to make sure that only on processing python is running
-		log.Logf(0, "----- Cov file reached 100, run analysis")
+		// log.Logf(0, "----- Cov file reached 100, run analysis")
 		runner.ProcessCovRawFileByLLM()
 	}
 
@@ -769,7 +769,7 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 		cmd := exec.Command("python3", "./scripts/process_cov_raw.py", runner.llmCovFolderPath+"/"+item.Name())
 		// log.Logf(0, cmd.String())
 		out, _ := cmd.Output()
-		log.Logf(0, string(out))
+		// log.Logf(0, string(out))
 		if strings.Contains(string(out), "XXXXX REACH") {
 			log.Logf(0, "XXXXX REACH")
 			hit_num += 1
@@ -778,7 +778,7 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 			break
 		}
 	}
-	log.Logf(0, "REMOVE FILES")
+	// log.Logf(0, "REMOVE FILES")
 	os.Remove(runner.llmCovFolderPath + "/*")
 	if hit_num != 0 {
 		// the fuzzing actually hit some close functions
