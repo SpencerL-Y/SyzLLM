@@ -11,6 +11,11 @@ if __name__ == "__main__":
 
     # print("cov_llm_proc called")
     current_file = sys.argv[1]
+    bounded_str = sys.argv[2]
+    hit_bound_not_reach = True
+    if "bound" in bounded_str:
+        hit_bound_not_reach = False
+
     close_addr_file_path = "../linuxRepo/line2addr/result_addr_info.txt"
     close_points_set = set()
     # TODO: open the pure addr points in addr2line folder and process the coverage files
@@ -78,7 +83,7 @@ if __name__ == "__main__":
     stripped_call_sequence = call_sequence.replace("\n", "").strip()
     stripped_arg_sequence = arg_sequence.replace("\n", "").strip()
     stripped_addresses_input = addresses_input.strip().replace("\n", "").strip()
-    if (stripped_arg_sequence != "" or stripped_call_sequence != "") and stripped_addresses_input != ""  and contain_close_points: 
+    if (stripped_arg_sequence != "" or stripped_call_sequence != "") and stripped_addresses_input != ""  and contain_close_points and hit_bound_not_reach: 
         final_write_result = "----- call sequence\n" + call_sequence +\
                              "----- arg sequence\n" + arg_sequence +\
                              "----- close points covered\n" + addresses_input

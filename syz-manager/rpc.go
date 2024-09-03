@@ -83,7 +83,7 @@ type Runner struct {
 	// llm coverage feedback
 	llmCovFolderPath string
 	fileIndex        int
-	processed        bool
+	fileIndex_lock   sync.Mutex
 }
 
 type BugFrames struct {
@@ -484,7 +484,7 @@ func (serv *RPCServer) handleExecResult(runner *Runner, msg *flatrpc.ExecResult)
 		// }
 		runner.fileIndex += 1
 	}
-	if runner.fileIndex%500 == 0 && runner.fileIndex != 0 {
+	if runner.fileIndex%500 == 0 && runner.fileIndex != 0 && printProg {
 		// runner.processed is to make sure that only on processing python is running
 		// log.Logf(0, "----- Cov file reached 100, run analysis")
 		runner.ProcessCovRawFileByLLM()
@@ -596,7 +596,6 @@ func (serv *RPCServer) createInstance(name string, injectExec chan<- bool) {
 		rnd:              rand.New(rand.NewSource(time.Now().UnixNano())),
 		llmCovFolderPath: "./cov_folder_vm_" + name,
 		fileIndex:        0,
-		processed:        false,
 	}
 	os.Mkdir(runner.llmCovFolderPath, 0777)
 	os.Chmod(runner.llmCovFolderPath, 0777)
@@ -763,10 +762,12 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 	// TODO: improve the logic later
 	hit_upper_bound := 5
 	hit_num := 0
+	bounded_str := "not"
+
 	for _, item := range entries {
 		// to see the path we are at
 		// to run the llm analysis for the coverage
-		cmd := exec.Command("python3", "./scripts/process_cov_raw.py", runner.llmCovFolderPath+"/"+item.Name())
+		cmd := exec.Command("python3", "./scripts/process_cov_raw.py", runner.llmCovFolderPath+"/"+item.Name(), bounded_str)
 		// log.Logf(0, cmd.String())
 		out, _ := cmd.Output()
 		// log.Logf(0, string(out))
@@ -775,10 +776,10 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 			hit_num += 1
 		}
 		if hit_num == hit_upper_bound {
-			break
+			bounded_str = "bounded"
 		}
 	}
-	// log.Logf(0, "REMOVE FILES")
+	log.Logf(0, "Hit times: "+strconv.Itoa(hit_num))
 	os.Remove(runner.llmCovFolderPath + "/*")
 	if hit_num != 0 {
 		// the fuzzing actually hit some close functions
