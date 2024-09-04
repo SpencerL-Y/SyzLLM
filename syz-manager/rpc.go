@@ -83,7 +83,7 @@ type Runner struct {
 	// llm coverage feedback
 	llmCovFolderPath string
 	fileIndex        int
-	fileIndex_lock   sync.Mutex
+	llmEnabled       bool
 }
 
 type BugFrames struct {
@@ -596,6 +596,7 @@ func (serv *RPCServer) createInstance(name string, injectExec chan<- bool) {
 		rnd:              rand.New(rand.NewSource(time.Now().UnixNano())),
 		llmCovFolderPath: "./cov_folder_vm_" + name,
 		fileIndex:        0,
+		llmEnabled:       false,
 	}
 	os.Mkdir(runner.llmCovFolderPath, 0777)
 	os.Chmod(runner.llmCovFolderPath, 0777)
@@ -781,7 +782,7 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 	}
 	log.Logf(0, "Hit times: "+strconv.Itoa(hit_num))
 	os.Remove(runner.llmCovFolderPath + "/*")
-	if hit_num != 0 {
+	if hit_num != 0 && runner.llmEnabled {
 		// the fuzzing actually hit some close functions
 		llm_analysis_command := exec.Command("python3", "./scripts/process_close_cov_result.py")
 		log.Logf(0, "process print: "+llm_analysis_command.String())

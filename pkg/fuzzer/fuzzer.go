@@ -66,7 +66,7 @@ func NewFuzzer(ctx context.Context, cfg *Config, rnd *rand.Rand,
 		// We're okay to lose some of the messages -- if we are already
 		// regenerating the table, we don't want to repeat it right away.
 		ctRegenerate:          make(chan struct{}),
-		llmEnabled:            true,
+		llmEnabled:            false,
 		ctLLMReady:            true,
 		llm_comm_sig_file:     "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_sig.txt",
 		llm_comm_content_file: "/home/clexma/Desktop/fox3/fuzzing/ChatAnalyzer/syz_comm_content.txt",
@@ -374,8 +374,8 @@ func (fuzzer *Fuzzer) choiceTableUpdater() {
 			return
 		case <-fuzzer.ctRegenerate:
 		}
-		enable_llm := fuzzer.llmEnabled
-		if enable_llm {
+		llmEnabled := fuzzer.llmEnabled
+		if llmEnabled {
 			fuzzer.updateChoiceTableWithLLM(fuzzer.Config.Corpus.Programs())
 		} else {
 			fuzzer.updateChoiceTable(fuzzer.Config.Corpus.Programs())
@@ -403,8 +403,8 @@ func (fuzzer *Fuzzer) ChoiceTable() *prog.ChoiceTable {
 		}
 	}
 	// LLM reading:
-	enable_llm := fuzzer.llmEnabled
-	if enable_llm {
+	llmEnabled := fuzzer.llmEnabled
+	if llmEnabled {
 		identifying_file_name := fuzzer.llm_comm_sig_file
 		comm_content, err := os.ReadFile(identifying_file_name)
 		if err != nil {
