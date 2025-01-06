@@ -786,7 +786,12 @@ func (runner *Runner) ProcessCovRawFileByLLM() {
 		// the fuzzing actually hit some close functions
 		llm_analysis_command := exec.Command("python3", "./scripts/process_close_cov_result.py")
 		log.Logf(0, "process print: "+llm_analysis_command.String())
-		tempout, _ := llm_analysis_command.Output()
+		tempout, err := llm_analysis_command.Output()
 		log.Logf(0, string(tempout))
+		if err != nil {
+			// Print the error if it occurs
+			fmt.Println("Error occurred:", err)
+			return
+		}
 	}
 }

@@ -143,7 +143,7 @@ if __name__ == "__main__":
     print("close ask")
     close_ask_cmd = "python3 chat_interface.py close_ask"
     result = subprocess.run(close_ask_cmd, shell=True, text=True, capture_output=True, env=os.environ.copy())
-    # print("close ask Error: " + result.stderr)
+    print("close ask Error: " + result.stderr)
     print("close ask Output: " + result.stdout)
     os.truncate(project_root + "ChatAnalyzer/close_cov_prog_source_code.txt", 0)
     os.truncate(project_root + "syzkaller/close_cov_result.txt", 0)

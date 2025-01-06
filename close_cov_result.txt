@@ -1,0 +1,573 @@
+----- call sequence
+----- call
+openat
+----- call
+openat
+----- call
+mount$9p_virtio
+----- call
+close
+----- call
+write
+----- call
+setxattr$trusted_overlay_origin
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+mount_flags
+ptr[in, p9_options_virtio]
+----- args
+fd
+----- args
+fd
+ptr[in, buffer]
+len
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff817ec6e7
+ffffffff81d54f83
+ffffffff817ecacd
+ffffffff817ec960
+ffffffff817ec6cc
+ffffffff81d54f64
+ffffffff817ec68a
+ffffffff817ec996
+=====
+----- call sequence
+----- call
+openat
+----- call
+openat
+----- call
+mount$9p_virtio
+----- call
+close
+----- call
+write
+----- call
+setxattr$trusted_overlay_origin
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+mount_flags
+ptr[in, p9_options_virtio]
+----- args
+fd
+----- args
+fd
+ptr[in, buffer]
+len
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff81d54f64
+ffffffff81d54f83
+ffffffff817ec6e7
+ffffffff817ec996
+ffffffff817ec68a
+ffffffff817ec960
+ffffffff817ec6cc
+ffffffff817ecacd
+=====
+----- call sequence
+----- call
+openat
+----- call
+openat
+----- call
+mount$9p_virtio
+----- call
+close
+----- call
+write
+----- call
+setxattr$trusted_overlay_origin
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+mount_flags
+ptr[in, p9_options_virtio]
+----- args
+fd
+----- args
+fd
+ptr[in, buffer]
+len
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff817ec960
+ffffffff817ec6cc
+ffffffff817ec996
+ffffffff817ecacd
+ffffffff817ec6e7
+ffffffff81d54f83
+ffffffff81d54f64
+ffffffff817ec68a
+=====
+----- call sequence
+----- call
+openat
+----- call
+lsetxattr$trusted_overlay_origin
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff81d54f64
+ffffffff817ec68a
+ffffffff817ec960
+ffffffff817ec6e7
+ffffffff817ecacd
+ffffffff81d54f83
+ffffffff817ec6cc
+=====
+----- call sequence
+----- call
+openat
+----- call
+lsetxattr$trusted_overlay_origin
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff81d54f83
+ffffffff817ec960
+ffffffff817ecacd
+ffffffff817ec6e7
+ffffffff81d54f64
+ffffffff817ec6cc
+ffffffff817ec68a
+=====
+----- call sequence
+----- call
+openat
+----- call
+lsetxattr$trusted_overlay_origin
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff817ec960
+ffffffff817ec6cc
+ffffffff81d54f64
+ffffffff81d54f83
+ffffffff817ec68a
+ffffffff817ec6e7
+ffffffff817ecacd
+=====
+----- call sequence
+----- call
+openat
+----- call
+socket$nl_generic
+----- call
+syz_open_dev$vcsn
+----- call
+syz_genetlink_get_family_id$nl80211
+----- call
+syz_genetlink_get_family_id$tipc2
+----- call
+socket$inet_udp
+----- call
+sendmsg$TIPC_NL_KEY_FLUSH
+----- call
+sendmsg$NL80211_CMD_START_AP
+----- call
+setxattr$trusted_overlay_origin
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+const[16, const]
+const[3, const]
+const[16, const]
+----- args
+ptr[in, buffer]
+intptr
+open_flags
+----- args
+ptr[in, buffer]
+sock_nl_generic
+----- args
+ptr[in, buffer]
+sock_nl_generic
+----- args
+const[2, const]
+const[2, const]
+const[0, const]
+----- args
+sock_nl_generic
+ptr[in, msghdr_netlink[netlink_msg_t[genl_tipc2_family_id, genlmsghdr_t[TIPC_NL_KEY_FLUSH], tipc_nl_policy]]]
+send_flags
+----- args
+sock_nl_generic
+ptr[in, msghdr_netlink[netlink_msg_t[nl80211_family_id, msg_nl80211_payload[NL80211_CMD_START_AP, nl80211_wdev_payload], nl80211_policy$start_ap]]]
+send_flags
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff817ec68a
+ffffffff817ec6e7
+ffffffff81d54f83
+ffffffff817ecacd
+ffffffff817ec960
+ffffffff817ec6cc
+ffffffff81d54f64
+=====
+----- call sequence
+----- call
+openat
+----- call
+socket$nl_generic
+----- call
+syz_open_dev$vcsn
+----- call
+syz_genetlink_get_family_id$nl80211
+----- call
+syz_genetlink_get_family_id$tipc2
+----- call
+socket$inet_udp
+----- call
+sendmsg$TIPC_NL_KEY_FLUSH
+----- call
+sendmsg$NL80211_CMD_START_AP
+----- call
+setxattr$trusted_overlay_origin
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+const[16, const]
+const[3, const]
+const[16, const]
+----- args
+ptr[in, buffer]
+intptr
+open_flags
+----- args
+ptr[in, buffer]
+sock_nl_generic
+----- args
+ptr[in, buffer]
+sock_nl_generic
+----- args
+const[2, const]
+const[2, const]
+const[0, const]
+----- args
+sock_nl_generic
+ptr[in, msghdr_netlink[netlink_msg_t[genl_tipc2_family_id, genlmsghdr_t[TIPC_NL_KEY_FLUSH], tipc_nl_policy]]]
+send_flags
+----- args
+sock_nl_generic
+ptr[in, msghdr_netlink[netlink_msg_t[nl80211_family_id, msg_nl80211_payload[NL80211_CMD_START_AP, nl80211_wdev_payload], nl80211_policy$start_ap]]]
+send_flags
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff817ec960
+ffffffff817ecacd
+ffffffff817ec6cc
+ffffffff81d54f64
+ffffffff817ec6e7
+ffffffff817ec68a
+ffffffff81d54f83
+=====
+----- call sequence
+----- call
+openat
+----- call
+setxattr
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+ptr[in, buffer]
+ptr[in, xattr_name]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff81d54f64
+ffffffff817ec6e7
+ffffffff817ec68a
+ffffffff81d54f83
+ffffffff817ec6cc
+ffffffff817ec960
+ffffffff817ecacd
+=====
+----- call sequence
+----- call
+openat
+----- call
+setxattr
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+ptr[in, buffer]
+ptr[in, xattr_name]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff817ecacd
+ffffffff817ec68a
+ffffffff81d54f64
+ffffffff817ec6cc
+ffffffff81d54f83
+ffffffff817ec6e7
+ffffffff817ec960
+=====
+----- call sequence
+----- call
+openat
+----- call
+fdatasync
+----- call
+ioctl$FS_IOC_FSSETXATTR
+----- call
+io_uring_setup
+----- call
+socket$inet_udplite
+----- call
+copy_file_range
+----- call
+ioctl$SNDRV_TIMER_IOCTL_CONTINUE
+----- call
+setxattr$trusted_overlay_origin
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+fd
+----- args
+fd
+const[1075599392, const]
+ptr[in, fsxattr]
+----- args
+int32
+ptr[inout, io_uring_params]
+----- args
+const[2, const]
+const[2, const]
+const[136, const]
+----- args
+fd
+ptr[inout, int64]
+fd
+ptr[inout, int64]
+intptr
+const[0, copy_file_range_flags]
+----- args
+fd_sndtimer
+const[21666, const]
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff817ec68a
+ffffffff817ec960
+ffffffff817ecacd
+ffffffff817ec6cc
+=====
+----- call sequence
+----- call
+openat
+----- call
+fdatasync
+----- call
+ioctl$FS_IOC_FSSETXATTR
+----- call
+io_uring_setup
+----- call
+socket$inet_udplite
+----- call
+copy_file_range
+----- call
+ioctl$SNDRV_TIMER_IOCTL_CONTINUE
+----- call
+setxattr$trusted_overlay_origin
+----- arg sequence
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+fd
+----- args
+fd
+const[1075599392, const]
+ptr[in, fsxattr]
+----- args
+int32
+ptr[inout, io_uring_params]
+----- args
+const[2, const]
+const[2, const]
+const[136, const]
+----- args
+fd
+ptr[inout, int64]
+fd
+ptr[inout, int64]
+intptr
+const[0, copy_file_range_flags]
+----- args
+fd_sndtimer
+const[21666, const]
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff817ec68a
+ffffffff817ecacd
+ffffffff817ec6cc
+ffffffff817ec960
+=====
+----- call sequence
+----- call
+epoll_create
+----- call
+openat
+----- call
+lsetxattr$trusted_overlay_origin
+----- call
+setxattr$trusted_overlay_origin
+----- arg sequence
+----- args
+int32
+----- args
+fd_dir
+ptr[in, buffer]
+open_flags
+open_mode
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- args
+ptr[in, buffer]
+ptr[in, buffer]
+ptr[in, buffer]
+len
+setxattr_flags
+----- close points covered
+ffffffff817ec6e7
+ffffffff81d54f64
+ffffffff81d54f83
+ffffffff817ec68a
+ffffffff817ec6cc
+ffffffff817ecacd
+ffffffff817ec960
+ffffffff817ec996
+=====
